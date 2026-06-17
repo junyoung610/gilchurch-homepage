@@ -4,6 +4,6 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/fi
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    location.href = "/admin/login.html";
+    location.href = "/gilchurch-homepage/admin/login.html";
   }
 });
