@@ -50,3 +50,29 @@ async function loadMenus() {
 }
 
 loadMenus();
+
+async function loadHero() {
+  const snap = await getDoc(doc(db, "homepage", "main"));
+
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+
+  document.getElementById("heroTitle").textContent = data.heroTitle || "";
+
+  document.getElementById("heroDescription").textContent = data.heroDescription || "";
+
+  document.getElementById("heroBtn1").textContent = data.heroButton1 || "";
+
+  document.getElementById("heroBtn1").href = data.heroButton1Link || "#";
+
+  document.getElementById("heroBtn2").textContent = data.heroButton2 || "";
+
+  document.getElementById("heroBtn2").href = data.heroButton2Link || "#";
+
+  if (data.heroImage) {
+    document.getElementById("hero").style.backgroundImage = `url(${data.heroImage})`;
+  }
+}
+
+loadHero();
