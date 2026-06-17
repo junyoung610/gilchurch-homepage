@@ -1,3 +1,18 @@
+// TinyMCE 초기화
+tinymce.init({
+  selector: "#editor",
+
+  height: 600,
+
+  plugins: ["link", "image", "table", "lists", "code"],
+
+  toolbar:
+    "undo redo | styles | bold italic underline | " +
+    "alignleft aligncenter alignright | " +
+    "bullist numlist | " +
+    "link image table | code",
+});
+
 import { db } from "../../js/firebase.js";
 
 import {
@@ -30,7 +45,9 @@ saveBtn.addEventListener("click", async () => {
   await setDoc(doc(db, "pages", slug.value), {
     title: title.value,
     slug: slug.value,
-    content: content.value,
+
+    content: tinymce.get("editor").getContent(),
+
     visible: true,
     updatedAt: new Date(),
   });
@@ -39,6 +56,9 @@ saveBtn.addEventListener("click", async () => {
 
   loadPages();
 });
+
+// 불러오기
+tinymce.get("editor").setContent(data.content);
 
 // 페이지목록
 async function loadPages() {
