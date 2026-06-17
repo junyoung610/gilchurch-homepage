@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>사이트 설정</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>관리자</h2>
+      </aside>
+
+      <main>
+        <h1>사이트 설정</h1>
+
+        <div class="form-group">
+          <label>사이트명</label>
+          <input type="text" id="siteName" />
+        </div>
+
+        <div class="form-group">
+          <label>설명</label>
+          <textarea id="description"></textarea>
+        </div>
+
+        <button id="saveBtn">저장</button>
+      </main>
+    </div>
+
+    <script type="module" src="./js/settings.js"></script>
+  </body>
+</html>

@@ -38,3 +38,24 @@ main {
   flex: 1;
   padding: 30px;
 }
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
