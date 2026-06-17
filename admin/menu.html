@@ -2,14 +2,13 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>영상관리</title>
+    <title>메뉴설정</title>
     <link rel="stylesheet" href="./css/admin.css" />
   </head>
   <body>
     <div class="layout">
       <aside class="sidebar">
         <h2>관리자</h2>
-
         <ul>
           <li><a href="./dashboard.html">대시보드</a></li>
           <li><a href="./boards.html">게시판관리</a></li>
@@ -19,11 +18,33 @@
           <li><a href="./settings.html">사이트설정</a></li>
         </ul>
       </aside>
-      <main>
-        <h1>영상관리</h1>
 
-        <p>준비중...</p>
+      <main>
+        <h1>메뉴설정</h1>
+
+        <div class="form-group">
+          <label>메뉴명</label>
+          <input type="text" id="menuTitle" />
+        </div>
+
+        <div class="form-group">
+          <label>URL</label>
+          <input type="text" id="menuUrl" />
+        </div>
+
+        <div class="form-group">
+          <label>순서</label>
+          <input type="number" id="menuOrder" />
+        </div>
+
+        <button id="addMenuBtn">메뉴 추가</button>
+
+        <hr />
+
+        <div id="menuList"></div>
       </main>
     </div>
+
+    <script type="module" src="./js/menu.js"></script>
   </body>
 </html>
