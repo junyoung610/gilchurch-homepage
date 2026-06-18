@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>관리자 대시보드</title>
     <link rel="stylesheet" href="./css/admin.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
     <div class="layout">
@@ -11,7 +12,12 @@
         <h2>관리자</h2>
 
         <ul>
-          <li><a href="./dashboard.html">대시보드</a></li>
+          <li>
+            <a href="./dashboard.html">
+              <i data-lucide="layout-dashboard"></i>
+              대시보드
+            </a>
+          </li>
           <li><a href="./menu.html">메뉴설정</a></li>
           <li><a href="./homepage.html"> 메인페이지관리 </a></li>
           <li><a href="./pages.html">페이지관리</a></li>
@@ -28,8 +34,14 @@
             <p>교회 홈페이지 관리 시스템</p>
           </div>
 
-          <div class="user-box">
-            <div id="userInfo"></div>
+          <div class="user-panel">
+            <div class="user-box">
+              <div class="avatar">👤</div>
+
+              <div id="userInfo"></div>
+            </div>
+
+            <button id="logoutBtn">로그아웃</button>
           </div>
         </div>
 

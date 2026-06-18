@@ -177,3 +177,68 @@ button {
   padding: 10px 20px;
   cursor: pointer;
 }
+
+.user-panel {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+.user-box {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  background: white;
+
+  padding: 12px 18px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: #e2e8f0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.user-name {
+  font-weight: 600;
+}
+
+.user-role {
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+#logoutBtn {
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  background: #ef4444;
+
+  color: white;
+
+  font-weight: 600;
+}

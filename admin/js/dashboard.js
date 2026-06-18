@@ -2,7 +2,11 @@ import { auth, db } from "../../js/firebase.js";
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import {
+  doc,
+  getDoc,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -24,11 +28,26 @@ onAuthStateChanged(auth, async (user) => {
   const data = userSnap.data();
 
   document.getElementById("userInfo").innerHTML = `
-        <p>${data.name}님 환영합니다.</p>
-        <p>권한 : ${data.role}</p>
-    `;
+
+  <div class="user-name">
+    ${data.name}
+  </div>
+
+  <div class="user-role">
+    ${data.role}
+  </div>
+
+`;
 });
 
 const pageCount = (await getDocs(collection(db, "pages"))).size;
 
 document.getElementById("pageCount").textContent = pageCount;
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+
+  location.href = "./login.html";
+});
