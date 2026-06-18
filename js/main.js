@@ -104,4 +104,71 @@ async function init() {
   await loadWorships();
 }
 
+async function loadSermons() {
+  const container = document.getElementById("sermonList");
+
+  if (!container) return;
+
+  const snapshot = await getDocs(collection(db, "videos"));
+
+  container.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    container.innerHTML += `
+
+      <a
+        class="sermon-card"
+        href="${data.youtubeUrl}"
+        target="_blank"
+      >
+
+        <img
+          src="${data.thumbnail}"
+          alt="${data.title}"
+        >
+
+        <div class="sermon-content">
+
+          <h3>${data.title}</h3>
+
+          <p>${data.date || ""}</p>
+
+        </div>
+
+      </a>
+
+    `;
+  });
+}
+
+async function loadNews() {
+  const container = document.getElementById("newsList");
+
+  if (!container) return;
+
+  const snapshot = await getDocs(collection(db, "posts"));
+
+  container.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    container.innerHTML += `
+
+      <div class="news-item">
+
+        <a href="#">
+          ${data.title}
+        </a>
+
+      </div>
+
+    `;
+  });
+}
+
 init();
+await loadSermons();
+await loadNews();

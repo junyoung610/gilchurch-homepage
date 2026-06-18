@@ -25,5 +25,6 @@ export async function loadFooter() {
    <p>${data.copyright || ""}</p>
 
  </div>
+    <a href="./admin/login.html" class="admin-link"> 관리자 </a>
  `;
 }

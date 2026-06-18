@@ -224,3 +224,77 @@ footer {
 .worship-card:hover {
   transform: translateY(-8px);
 }
+
+#sermonList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.sermon-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  transition: 0.3s;
+}
+
+.sermon-card:hover {
+  transform: translateY(-8px);
+}
+
+.sermon-card img {
+  width: 100%;
+  display: block;
+}
+
+.sermon-content {
+  padding: 20px;
+}
+
+.sermon-content h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.sermon-content p {
+  color: #777;
+}
+
+#newsList {
+  margin-top: 60px;
+}
+
+.news-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.news-item a {
+  color: #222;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.logo img {
+  height: 60px;
+  width: auto;
+  display: block;
+}
+
+.admin-link {
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+
+  opacity: 0.6;
+}
+
+.admin-link:hover {
+  opacity: 1;
+}
