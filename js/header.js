@@ -9,6 +9,13 @@ import {
   orderBy,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+import { auth } from "./firebase.js";
+
+import {
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 export async function loadHeader() {
   const header = document.getElementById("header");
 
@@ -51,5 +58,50 @@ export async function loadHeader() {
     </div>
   `;
 
+  html += `
+
+<div class="auth-menu">
+
+  <a href="/gilchurch-homepage/login.html">
+    로그인
+  </a>
+
+  <a
+    href="/gilchurch-homepage/register.html"
+    class="register-btn"
+  >
+    회원가입
+  </a>
+
+</div>
+
+`;
+
   header.innerHTML = html;
 }
+
+onAuthStateChanged(auth, (user) => {
+  const authArea = document.getElementById("authArea");
+
+  if (user) {
+    authArea.innerHTML = `
+
+      <a href="/gilchurch-homepage/mypage.html">
+        마이페이지
+      </a>
+
+      <a href="#" id="logoutBtn">
+        로그아웃
+      </a>
+
+    `;
+
+    document.getElementById("logoutBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      await signOut(auth);
+
+      location.reload();
+    });
+  }
+});

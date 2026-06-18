@@ -298,3 +298,35 @@ footer {
 .admin-link:hover {
   opacity: 1;
 }
+
+.header-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+.auth-menu {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.auth-menu a {
+  text-decoration: none;
+
+  color: #333;
+}
+
+.register-btn {
+  background: #2563eb;
+
+  color: white !important;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+}
