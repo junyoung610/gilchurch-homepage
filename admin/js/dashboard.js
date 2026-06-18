@@ -28,3 +28,7 @@ onAuthStateChanged(auth, async (user) => {
         <p>권한 : ${data.role}</p>
     `;
 });
+
+const pageCount = (await getDocs(collection(db, "pages"))).size;
+
+document.getElementById("pageCount").textContent = pageCount;
