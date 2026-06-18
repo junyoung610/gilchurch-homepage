@@ -16,7 +16,7 @@ export async function loadHeader() {
   <div class="container">
 
     <div class="logo">
-      교회 로고
+      <img src="로고URL">
     </div>
 
     <nav>
