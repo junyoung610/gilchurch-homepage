@@ -7,8 +7,35 @@ import {
   getDocs,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-import { signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+  signOut,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+/* 통계 */
+async function loadStats() {
+  try {
+    const pageCount = (await getDocs(collection(db, "pages"))).size;
+
+    const postCount = (await getDocs(collection(db, "posts"))).size;
+
+    const videoCount = (await getDocs(collection(db, "videos"))).size;
+
+    const menuCount = (await getDocs(collection(db, "menus"))).size;
+
+    document.getElementById("pageCount").textContent = pageCount;
+
+    document.getElementById("postCount").textContent = postCount;
+
+    document.getElementById("videoCount").textContent = videoCount;
+
+    document.getElementById("menuCount").textContent = menuCount;
+  } catch (error) {
+    console.error("통계 로드 실패", error);
+  }
+}
+
+/* 로그인 상태 확인 */
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     location.href = "/gilchurch-homepage/admin/login.html";
@@ -16,37 +43,46 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  const userRef = doc(db, "users", user.uid);
+  try {
+    const userRef = doc(db, "users", user.uid);
 
-  const userSnap = await getDoc(userRef);
+    const userSnap = await getDoc(userRef);
 
-  if (!userSnap.exists()) {
-    alert("권한 없음");
+    if (!userSnap.exists()) {
+      alert("권한이 없습니다.");
 
-    return;
+      location.href = "./login.html";
+
+      return;
+    }
+
+    const data = userSnap.data();
+
+    document.getElementById("userInfo").innerHTML = `
+
+      <div class="user-name">
+        ${data.name || "관리자"}
+      </div>
+
+      <div class="user-role">
+        ${data.role || "Admin"}
+      </div>
+
+    `;
+
+    await loadStats();
+  } catch (error) {
+    console.error(error);
   }
-
-  const data = userSnap.data();
-
-  document.getElementById("userInfo").innerHTML = `
-
-  <div class="user-name">
-    ${data.name}
-  </div>
-
-  <div class="user-role">
-    ${data.role}
-  </div>
-
-`;
 });
 
-const pageCount = (await getDocs(collection(db, "pages"))).size;
-
-document.getElementById("pageCount").textContent = pageCount;
-
+/* 로그아웃 */
 document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await signOut(auth);
+  try {
+    await signOut(auth);
 
-  location.href = "./login.html";
-}); // 수정
+    location.href = "./login.html";
+  } catch (error) {
+    console.error(error);
+  }
+});
