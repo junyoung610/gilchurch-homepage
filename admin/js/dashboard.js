@@ -2,11 +2,9 @@ import { auth, db } from "../../js/firebase.js";
 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-import {
-  doc,
-  getDoc,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+import { signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -44,9 +42,7 @@ const pageCount = (await getDocs(collection(db, "pages"))).size;
 
 document.getElementById("pageCount").textContent = pageCount;
 
-const logoutBtn = document.getElementById("logoutBtn");
-
-logoutBtn.addEventListener("click", async () => {
+document.getElementById("logoutBtn").addEventListener("click", async () => {
   await signOut(auth);
 
   location.href = "./login.html";
