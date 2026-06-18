@@ -92,3 +92,37 @@ nav a {
   border: 1px solid white;
   color: white;
 }
+
+.container {
+  width: 1200px;
+  max-width: 95%;
+  margin: auto;
+}
+
+header {
+  border-bottom: 1px solid #ddd;
+  background: white;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+footer {
+  background: #222;
+  color: white;
+  padding: 50px 0;
+}
