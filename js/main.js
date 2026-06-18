@@ -1,7 +1,18 @@
 import { db } from "./firebase.js";
 
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+import { loadHeader } from "./header.js";
+import { loadFooter } from "./footer.js";
+
+/* 사이트 기본 정보 */
 async function loadSite() {
   const snap = await getDoc(doc(db, "settings", "site"));
 
@@ -9,48 +20,10 @@ async function loadSite() {
 
   const data = snap.data();
 
-  document.title = data.siteName;
-
-  document.getElementById("welcomeTitle").textContent = data.siteName;
-
-  document.getElementById("welcomeDesc").textContent = data.description;
+  document.title = data.siteName || "교회 홈페이지";
 }
 
-loadSite();
-
-import {
-  collection,
-  getDocs,
-  query,
-  orderBy,
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-async function loadMenus() {
-  const snapshot = await getDocs(query(collection(db, "menus"), orderBy("order")));
-
-  let html = `
- <nav>
- `;
-
-  snapshot.forEach((doc) => {
-    const menu = doc.data();
-
-    html += `
-   <a href="${menu.url}">
-    ${menu.title}
-   </a>
-  `;
-  });
-
-  html += `
- </nav>
- `;
-
-  document.getElementById("header").innerHTML = html;
-}
-
-loadMenus();
-
+/* Hero 영역 */
 async function loadHero() {
   const snap = await getDoc(doc(db, "homepage", "main"));
 
@@ -58,28 +31,77 @@ async function loadHero() {
 
   const data = snap.data();
 
-  document.getElementById("heroTitle").textContent = data.heroTitle || "";
+  const heroTitle = document.getElementById("heroTitle");
 
-  document.getElementById("heroDescription").textContent = data.heroDescription || "";
+  const heroDescription = document.getElementById("heroDescription");
 
-  document.getElementById("heroBtn1").textContent = data.heroButton1 || "";
+  const heroBtn1 = document.getElementById("heroBtn1");
 
-  document.getElementById("heroBtn1").href = data.heroButton1Link || "#";
+  const heroBtn2 = document.getElementById("heroBtn2");
 
-  document.getElementById("heroBtn2").textContent = data.heroButton2 || "";
+  const hero = document.getElementById("hero");
 
-  document.getElementById("heroBtn2").href = data.heroButton2Link || "#";
+  if (heroTitle) heroTitle.textContent = data.heroTitle || "";
 
-  if (data.heroImage) {
-    document.getElementById("hero").style.backgroundImage = `url(${data.heroImage})`;
+  if (heroDescription) heroDescription.textContent = data.heroDescription || "";
+
+  if (heroBtn1) {
+    heroBtn1.textContent = data.heroButton1 || "";
+
+    heroBtn1.href = data.heroButton1Link || "#";
+  }
+
+  if (heroBtn2) {
+    heroBtn2.textContent = data.heroButton2 || "";
+
+    heroBtn2.href = data.heroButton2Link || "#";
+  }
+
+  if (hero && data.heroImage) {
+    hero.style.backgroundImage = `url(${data.heroImage})`;
   }
 }
 
-loadHero();
+/* 예배안내 */
+async function loadWorships() {
+  const container = document.getElementById("worshipList");
 
-import { loadHeader } from "./header.js";
+  if (!container) return;
 
-import { loadFooter } from "./footer.js";
+  const snapshot = await getDocs(query(collection(db, "worships"), orderBy("order")));
 
-loadHeader();
-loadFooter();
+  container.innerHTML = "";
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    container.innerHTML += `
+
+      <div class="worship-card">
+
+        <h3>${data.title}</h3>
+
+        <p>${data.time}</p>
+
+        <p>${data.location}</p>
+
+      </div>
+
+    `;
+  });
+}
+
+/* 실행 */
+async function init() {
+  await loadHeader();
+
+  await loadFooter();
+
+  await loadSite();
+
+  await loadHero();
+
+  await loadWorships();
+}
+
+init();

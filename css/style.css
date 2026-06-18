@@ -198,3 +198,29 @@ footer {
   padding: 40px;
   text-align: center;
 }
+
+#worshipList {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 30px;
+
+  margin-top: 60px;
+}
+
+.worship-card {
+  background: #f8f8f8;
+
+  border-radius: 20px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  transition: 0.3s;
+}
+
+.worship-card:hover {
+  transform: translateY(-8px);
+}
