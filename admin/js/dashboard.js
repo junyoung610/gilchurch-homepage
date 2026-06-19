@@ -1,11 +1,13 @@
-import { db, auth } from "./firebase.js";
+import { db } from "./firebase.js";
 
 import {
-  doc,
-  getDoc,
   collection,
   getDocs,
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+  query,
+  where,
+  doc,
+  getDoc,
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 import {
   signOut,
@@ -33,6 +35,47 @@ async function loadStats() {
   } catch (error) {
     console.error("통계 로드 실패", error);
   }
+}
+
+// 전체교인 수
+async function loadMemberCount() {
+  const snapshot = await getDocs(collection(db, "members"));
+
+  document.getElementById("memberCount").textContent = snapshot.size;
+}
+
+// 새가족수
+async function loadNewcomersCount() {
+  const snapshot = await getDocs(collection(db, "newcomers"));
+
+  document.getElementById("newcomers").textContent = snapshot.size;
+}
+
+// 승인대기
+async function loadPendingUsers() {
+  const q = query(collection(db, "users"), where("approved", "==", false));
+
+  const snapshot = await getDocs(q);
+
+  document.getElementById("pendingUsers").textContent = snapshot.size;
+}
+
+// 오늘 출석
+async function loadTodayAttendance() {
+  const today = new Date().toISOString().split("T")[0];
+
+  const docRef = doc(db, "attendance", today);
+
+  const snap = await getDoc(docRef);
+
+  if (!snap.exists()) {
+    document.getElementById("todayAttendance").textContent = 0;
+    return;
+  }
+
+  const data = snap.data();
+
+  document.getElementById("todayAttendance").textContent = data.members?.length || 0;
 }
 
 /* 로그인 상태 확인 */
@@ -106,3 +149,8 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     console.error(error);
   }
 });
+
+loadMemberCount();
+loadNewcomersCount();
+loadPendingUsers();
+loadTodayAttendance();
