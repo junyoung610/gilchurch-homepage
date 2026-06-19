@@ -75,6 +75,31 @@ body {
   margin-bottom: 8px;
 }
 
+/* 사이드바 아이콘 */
+.icon {
+  min-width: 24px;
+
+  text-align: center;
+}
+
+.sidebar.collapsed .menu-text {
+  display: none;
+}
+
+.sidebar.collapsed .group-title {
+  display: none;
+}
+
+.sidebar.collapsed .admin-logo {
+  font-size: 0;
+}
+
+.sidebar.collapsed .admin-logo::before {
+  content: "⛪";
+
+  font-size: 24px;
+}
+
 /* 관리자 로그인 */
 
 .topbar {
@@ -242,29 +267,31 @@ main h1 {
 
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
   gap: 15px;
-  margin-top: 10px;
 }
 
 .quick-actions a {
-  display: inline-flex;
-
-  align-items: center;
-
-  padding: 12px 18px;
-
-  border-radius: 12px;
-
   background: #2563eb;
-
   color: white;
-
   text-decoration: none;
-
+  padding: 18px;
+  border-radius: 14px;
   font-weight: 600;
+  transition: 0.2s;
+}
 
-  margin-right: 10px;
+.quick-actions a:hover {
+  transform: translateY(-3px);
+}
+
+/* 통계숫자강조 */
+.count {
+  font-size: 46px;
+  font-weight: 700;
+  margin-top: 12px;
 }
 
 /* 카드 */

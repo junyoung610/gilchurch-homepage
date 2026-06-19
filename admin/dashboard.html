@@ -11,17 +11,22 @@
       <aside class="sidebar">
         <!-- 접기기능 -->
         <div class="sidebar-header">
-          <div class="admin-logo">⛪ Church CMS</div>
+          <div>
+            <div class="admin-logo">⛪ Church CMS</div>
+
+            <div class="logo-sub">Church Management System</div>
+          </div>
+
           <button id="toggleSidebar">☰</button>
         </div>
-
-        <div class="admin-logo">⛪ Church CMS</div>
-        <h2 class="logo-sub">Church Management System</h2>
 
         <div class="menu-group">
           <div class="group-title">🏠 대시보드</div>
 
-          <a href="./dashboard.html"> 대시보드 </a>
+          <a href="./dashboard.html">
+            <span class="icon">🏠</span>
+            <span class="menu-text"> 대시보드 </span>
+          </a>
         </div>
 
         <div class="menu-group">
@@ -73,7 +78,7 @@
         <div class="stats-grid">
           <div class="stat-card">
             <h3>📄 페이지</h3>
-            <span id="pageCount">0</span>
+            <div class="count" id="pageCount">0</div>
           </div>
 
           <div class="stat-card">
