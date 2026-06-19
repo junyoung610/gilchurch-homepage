@@ -411,3 +411,37 @@ footer {
 .menu-item:hover .submenu {
   display: block;
 }
+
+.page-container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.page-header {
+  margin-bottom: 40px;
+}
+
+.page-header h1 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.page-content {
+  line-height: 1.8;
+}
+
+.page-content img {
+  max-width: 100%;
+}
+
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.page-content table td,
+.page-content table th {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
