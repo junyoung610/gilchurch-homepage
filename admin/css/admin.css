@@ -197,6 +197,7 @@ main h1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
+  margin-top: 10px;
 }
 
 .quick-actions a {
@@ -250,6 +251,7 @@ main h1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  margin-bottom: 35px;
 }
 
 .stat-card h3 {
