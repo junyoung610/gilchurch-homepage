@@ -466,3 +466,48 @@ select:focus {
     padding: 20px;
   }
 }
+
+.menu-toggle {
+  width: 100%;
+
+  background: transparent;
+
+  border: none;
+
+  color: white;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 12px 16px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  font-weight: 600;
+}
+
+.submenu {
+  max-height: 0;
+
+  overflow: hidden;
+
+  transition: 0.3s;
+}
+.menu-group.active .submenu {
+  max-height: 400px;
+}
+.submenu a {
+  padding-left: 40px;
+
+  font-size: 14px;
+
+  color: #cbd5e1;
+}
+.submenu a:hover {
+  color: white;
+}
