@@ -7,6 +7,7 @@
     <title>관리자 대시보드</title>
 
     <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
 
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
@@ -23,18 +24,21 @@
 
         <!-- 대시보드 -->
         <div class="menu-group">
-          <button class="menu-toggle">
-            <span>
-              <a href="./dashboard.html">🏠 대시보드</a>
-            </span>
-          </button>
+          <a href="./dashboard.html">
+            <span class="icon">🏠</span>
+            <span class="menu-text"> 대시보드 </span>
+          </a>
         </div>
 
         <!-- 홈페이지 관리 -->
         <div class="menu-group">
           <button class="menu-toggle">
-            <span>📄 홈페이지 관리</span>
-            <span>▾</span>
+            <span class="menu-main">
+              <span class="icon">📄</span>
+              <span class="menu-text">홈페이지 관리</span>
+            </span>
+
+            <span class="arrow">▾</span>
           </button>
           <div class="submenu">
             <a href="./menu.html">메뉴설정</a>
@@ -49,8 +53,12 @@
         <!-- 교인 관리 -->
         <div class="menu-group">
           <button class="menu-toggle">
-            <span>👥 교인 관리</span>
-            <span>▾</span>
+            <span class="menu-main">
+              <span class="icon">👥</span>
+              <span class="menu-text">교인 관리</span>
+            </span>
+
+            <span class="arrow">▾</span>
           </button>
           <div class="submenu">
             <a href="./users.html">회원관리</a>
@@ -62,8 +70,12 @@
         <!-- 출석 관리 -->
         <div class="menu-group">
           <button class="menu-toggle">
-            <span>📅 출석 관리</span>
-            <span>▾</span>
+            <span class="menu-main">
+              <span class="icon">📅</span>
+              <span class="menu-text">출석 관리</span>
+            </span>
+
+            <span class="arrow">▾</span>
           </button>
           <div class="submenu">
             <a href="./attendance.html">출석관리</a>
