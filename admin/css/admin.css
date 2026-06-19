@@ -16,7 +16,18 @@ body {
   margin: 0;
   font-family: "Pretendard", sans-serif;
 
-  background: #f8fafc;
+  background: #f1f5f9;
+}
+
+.admin-logo {
+  font-size: 22px;
+  font-weight: 700;
+
+  margin-bottom: 40px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .layout {
@@ -24,13 +35,15 @@ body {
   min-height: 100vh;
 }
 .sidebar {
-  width: 260px;
+  width: 280px;
 
-  background: var(--sidebar);
+  background: #111827;
 
   color: white;
 
-  padding: 30px 20px;
+  padding: 24px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sidebar h2 {
@@ -62,6 +75,12 @@ body {
 
 .sidebar a:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar a.active {
+  background: #2563eb;
+
+  font-weight: 600;
 }
 
 .content {
@@ -105,7 +124,9 @@ body {
 
   border-radius: 18px;
 
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .stat-card h3 {
@@ -118,8 +139,27 @@ body {
 
 .stat-card span {
   font-size: 38px;
+}
+.stat-card {
+  position: relative;
 
-  font-weight: 700;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: "";
+
+  position: absolute;
+
+  right: -20px;
+  top: -20px;
+
+  width: 80px;
+  height: 80px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.08);
 }
 
 .dashboard-card {
@@ -129,7 +169,9 @@ body {
 
   padding: 30px;
 
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .quick-actions {
@@ -199,7 +241,9 @@ button {
 
   border-radius: 14px;
 
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 10px 30px rgba(0, 0, 0, 0.04);
 }
 
 .avatar {
@@ -285,8 +329,21 @@ button {
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
+  background: white;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+th {
+  background: #f8fafc;
+
+  font-weight: 600;
+
+  color: #475569;
 }
 
 th,
@@ -342,5 +399,76 @@ th {
 
   margin-bottom: 15px;
 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.btn {
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.btn-primary {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-success {
+  background: #10b981;
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid #dbe3ec;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  transition: 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+main {
+  padding: 40px;
+}
+
+main h1 {
+  font-size: 32px;
+
+  margin-bottom: 25px;
+
+  font-weight: 700;
 }
