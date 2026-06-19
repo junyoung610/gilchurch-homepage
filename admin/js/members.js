@@ -5,36 +5,75 @@ import {
   getDocs,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+let allMembers = [];
+
 async function loadMembers() {
+  const snapshot = await getDocs(collection(db, "members"));
+
+  allMembers = [];
+
+  snapshot.forEach((docSnap) => {
+    allMembers.push({
+      id: docSnap.id,
+      ...docSnap.data(),
+    });
+  });
+
+  renderMembers();
+}
+
+function renderMembers() {
   const table = document.getElementById("memberTable");
 
-  const snapshot = await getDocs(collection(db, "members"));
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+
+  const department = document.getElementById("departmentFilter").value;
 
   table.innerHTML = "";
 
-  snapshot.forEach((docSnap) => {
-    const member = docSnap.data();
+  allMembers
+    .filter((member) => {
+      const nameMatch = (member.name || "").toLowerCase().includes(keyword);
 
-    table.innerHTML += `
-      <tr>
+      const departmentMatch = !department || (member.departments || []).includes(department);
 
-        <td>${member.name || ""}</td>
+      return nameMatch && departmentMatch;
+    })
+    .forEach((member) => {
+      table.innerHTML += `
 
-        <td>  ${(member.departments || []).join(", ")}</td>
+        <tr>
 
-        <td>${member.position || ""}</td>
+          <td>${member.name || ""}</td>
 
-        <td>${member.phone || ""}</td>
+          <td>
+            ${(member.departments || []).join(", ")}
+          </td>
 
-       <td>
-  <a href="./edit-member.html?id=${docSnap.id}">
-    수정
-  </a>
-</td>
+          <td>
+            ${(member.positions || []).join(", ")}
+          </td>
 
-      </tr>
-    `;
-  });
+          <td>${member.phone || ""}</td>
+
+          <td>
+
+            <a
+              href="./edit-member.html?id=${member.id}"
+            >
+              수정
+            </a>
+
+          </td>
+
+        </tr>
+
+      `;
+    });
 }
 
 loadMembers();
+
+document.getElementById("searchInput").addEventListener("input", renderMembers);
+
+document.getElementById("departmentFilter").addEventListener("change", renderMembers);

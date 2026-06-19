@@ -299,3 +299,20 @@ td {
 th {
   background: #f5f5f5;
 }
+
+.member-tools {
+  display: flex;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.member-tools input,
+.member-tools select {
+  padding: 10px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+}
