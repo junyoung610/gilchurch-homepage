@@ -1,4 +1,4 @@
-import { db } from "../../js/firebase.js";
+import { db } from "./firebase.js";
 
 import {
   collection,
@@ -10,34 +10,34 @@ import {
   orderBy,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-//요소가져오기
-const menuTitle = document.getElementById("menuTitle");
-
-const menuUrl = document.getElementById("menuUrl");
-
-const menuOrder = document.getElementById("menuOrder");
-
-const addMenuBtn = document.getElementById("addMenuBtn");
-
+const form = document.getElementById("menuForm");
 const menuList = document.getElementById("menuList");
+const typeSelect = document.getElementById("type");
+const parentWrap = document.getElementById("parentWrap");
+const parentMenu = document.getElementById("parentMenu");
 
-// 메뉴추가
-addMenuBtn.addEventListener("click", async () => {
-  await addDoc(collection(db, "menus"), {
-    title: menuTitle.value,
-    url: menuUrl.value,
-    order: Number(menuOrder.value),
-    visible: true,
-  });
-
-  menuTitle.value = "";
-  menuUrl.value = "";
-  menuOrder.value = "";
-
-  loadMenus();
+typeSelect.addEventListener("change", () => {
+  parentWrap.style.display = typeSelect.value === "sub" ? "block" : "none";
 });
 
-// 메뉴불러오기
+async function loadParentMenus() {
+  const snapshot = await getDocs(collection(db, "menus"));
+
+  parentMenu.innerHTML = '<option value="">선택</option>';
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    if (data.type === "main") {
+      parentMenu.innerHTML += `
+        <option value="${docSnap.id}">
+          ${data.title}
+        </option>
+      `;
+    }
+  });
+}
+
 async function loadMenus() {
   menuList.innerHTML = "";
 
@@ -45,38 +45,65 @@ async function loadMenus() {
 
   const snapshot = await getDocs(q);
 
-  snapshot.forEach((docSnap) => {
-    const data = docSnap.data();
+  const menus = [];
 
+  snapshot.forEach((docSnap) => {
+    menus.push({
+      id: docSnap.id,
+      ...docSnap.data(),
+    });
+  });
+
+  const mains = menus.filter((menu) => menu.type === "main");
+
+  mains.forEach((main) => {
     const div = document.createElement("div");
 
-    div.innerHTML = `
-      <p>
-        ${data.order}.
-        ${data.title}
-        (${data.url})
+    div.className = "menu-item";
 
-        <button
-        data-id="${docSnap.id}">
-        삭제
-        </button>
-      </p>
+    div.innerHTML = `
+      <div class="menu-main">
+        📁 ${main.title}
+      </div>
     `;
+
+    const subs = menus.filter((menu) => menu.parentId === main.id);
+
+    subs.forEach((sub) => {
+      div.innerHTML += `
+        <div class="menu-sub">
+          └ ${sub.title}
+        </div>
+      `;
+    });
 
     menuList.appendChild(div);
   });
 }
 
-// 삭제기능
-menuList.addEventListener("click", async (e) => {
-  if (e.target.tagName === "BUTTON") {
-    const id = e.target.dataset.id;
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    await deleteDoc(doc(db, "menus", id));
+  await addDoc(collection(db, "menus"), {
+    title: document.getElementById("title").value,
 
-    loadMenus();
-  }
+    url: document.getElementById("url").value,
+
+    type: document.getElementById("type").value,
+
+    parentId: document.getElementById("type").value === "sub" ? parentMenu.value : null,
+
+    order: Number(document.getElementById("order").value),
+
+    visible: true,
+  });
+
+  form.reset();
+
+  await loadMenus();
+
+  await loadParentMenus();
 });
 
-// 최초로 실행
 loadMenus();
+loadParentMenus();
