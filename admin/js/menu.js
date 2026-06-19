@@ -1,3 +1,5 @@
+const pageSelect = document.getElementById("pageSelect");
+
 import { db } from "./firebase.js";
 
 import {
@@ -26,6 +28,22 @@ const parentWrap = document.getElementById("parentWrap");
 const parentMenu = document.getElementById("parentMenu");
 
 let editId = null;
+
+async function loadPages() {
+  const snapshot = await getDocs(collection(db, "pages"));
+
+  pageSelect.innerHTML = '<option value="">페이지 선택</option>';
+
+  snapshot.forEach((docSnap) => {
+    const page = docSnap.data();
+
+    pageSelect.innerHTML += `
+      <option value="${docSnap.id}">
+        ${page.title}
+      </option>
+    `;
+  });
+}
 
 /* ==========================
    메뉴유형 변경
@@ -173,7 +191,7 @@ form.addEventListener("submit", async (e) => {
 
   const title = document.getElementById("title").value;
 
-  const url = document.getElementById("url").value;
+  const pageId = pageSelect.value || null;
 
   const type = document.getElementById("type").value;
 
@@ -184,7 +202,7 @@ form.addEventListener("submit", async (e) => {
   if (editId) {
     await updateDoc(doc(db, "menus", editId), {
       title,
-      url,
+      pageId,
       type,
       parentId,
       order,
@@ -194,13 +212,12 @@ form.addEventListener("submit", async (e) => {
   } else {
     await addDoc(collection(db, "menus"), {
       title,
-      url,
+      pageId,
       type,
       parentId,
       order,
       visible: true,
     });
-
     alert("메뉴 저장 완료");
   }
 
@@ -227,7 +244,9 @@ async function editMenu(id) {
 
   document.getElementById("title").value = data.title;
 
-  document.getElementById("url").value = data.url;
+  pageSelect.value = data.pageId || "";
+
+  pageSelect.value = "";
 
   document.getElementById("type").value = data.type;
 
@@ -313,3 +332,4 @@ function resetForm() {
 
 loadMenus();
 loadParentMenus();
+loadPages();

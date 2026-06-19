@@ -19,48 +19,54 @@
           <h1>메뉴 관리</h1>
           <p>홈페이지 메뉴를 생성하고 관리합니다.</p>
         </div>
+        <div class="card">
+          <h2>메뉴 등록</h2>
 
-        <div class="menu-layout">
-          <!-- 왼쪽 -->
-          <div class="card">
-            <h2>메뉴 추가</h2>
-
-            <form id="menuForm">
+          <form id="menuForm">
+            <div class="form-group">
               <label>메뉴명</label>
               <input type="text" id="title" required />
+            </div>
 
-              <label>URL</label>
-              <input type="text" id="url" placeholder="/about" required />
+            <div class="form-group">
+              <label>연결 페이지</label>
 
+              <select id="pageSelect">
+                <option value="">페이지 선택</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label>메뉴 유형</label>
 
               <select id="type">
                 <option value="main">메인메뉴</option>
+
                 <option value="sub">서브메뉴</option>
               </select>
+            </div>
 
-              <div id="parentWrap" style="display: none">
-                <label>상위메뉴</label>
+            <div id="parentWrap" style="display: none">
+              <label>상위메뉴</label>
 
-                <select id="parentMenu">
-                  <option value="">선택</option>
-                </select>
-              </div>
+              <select id="parentMenu">
+                <option value="">선택</option>
+              </select>
+            </div>
 
-              <label>순서</label>
+            <div class="form-group">
+              <label>정렬순서</label>
 
               <input type="number" id="order" value="1" />
+            </div>
 
-              <button type="submit">메뉴 저장</button>
-            </form>
-          </div>
+            <button type="submit">메뉴 저장</button>
+          </form>
+        </div>
+        <div class="menu-layout">
+          <div class="card">메뉴 등록 폼</div>
 
-          <!-- 오른쪽 -->
-          <div class="card">
-            <h2>메뉴 목록</h2>
-
-            <div id="menuList"></div>
-          </div>
+          <div class="card">메뉴 목록</div>
         </div>
       </main>
     </div>
