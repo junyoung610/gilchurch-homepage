@@ -3,6 +3,8 @@ import { db } from "./firebase.js";
 import {
   collection,
   getDocs,
+  deleteDoc,
+  doc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 let allMembers = [];
@@ -56,15 +58,20 @@ function renderMembers() {
 
           <td>${member.phone || ""}</td>
 
-          <td>
+         <td>
 
-            <a
-              href="./edit-member.html?id=${member.id}"
-            >
-              수정
-            </a>
+  <a href="./edit-member.html?id=${member.id}">
+    수정
+  </a>
 
-          </td>
+  <button
+    class="delete-btn"
+    data-id="${member.id}"
+  >
+    삭제
+  </button>
+
+</td>
 
         </tr>
 
@@ -77,3 +84,53 @@ loadMembers();
 document.getElementById("searchInput").addEventListener("input", renderMembers);
 
 document.getElementById("departmentFilter").addEventListener("change", renderMembers);
+
+document.querySelectorAll(".delete-btn").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    if (!confirm("정말 삭제하시겠습니까?")) return;
+
+    await deleteDoc(doc(db, "members", btn.dataset.id));
+
+    loadMembers();
+  });
+});
+
+document.getElementById("birthdayBtn").addEventListener("click", () => {
+  const month = new Date().getMonth() + 1;
+
+  const result = allMembers.filter((member) => {
+    if (!member.birth) return false;
+
+    return Number(member.birth.split("-")[1]) === month;
+  });
+
+  alert(
+    result
+      .map(
+        (m) =>
+          `${m.name}
+(${m.birth})`,
+      )
+      .join("\n"),
+  );
+});
+
+document.getElementById("excelBtn").addEventListener("click", () => {
+  const rows = allMembers.map((m) => ({
+    이름: m.name,
+
+    부서: (m.departments || []).join(", "),
+
+    전화번호: m.phone || "",
+
+    생일: m.birth || "",
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+
+  const workbook = XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(workbook, worksheet, "교적부");
+
+  XLSX.writeFile(workbook, "교적부.xlsx");
+});

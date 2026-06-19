@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>교적관리</title>
     <link rel="stylesheet" href="./css/admin.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   </head>
   <body>
     <div class="layout">
@@ -37,6 +38,9 @@
             <option value="새가족부">새가족부</option>
           </select>
         </div>
+
+        <button id="birthdayBtn">이번 달 생일자</button>
+        <button id="excelBtn">엑셀 다운로드</button>
 
         <table>
           <thead>
