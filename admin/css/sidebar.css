@@ -59,3 +59,53 @@
 .sidebar.collapsed a {
   justify-content: center;
 }
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.logo-icon {
+  flex-shrink: 0;
+}
+
+.logo-text {
+  white-space: nowrap;
+}
+
+.logo-sub {
+  padding: 0 20px 20px;
+  font-size: 13px;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 20px;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .logo-sub,
+.sidebar.collapsed .menu-text,
+.sidebar.collapsed .arrow {
+  display: none;
+}
+
+.sidebar.collapsed a,
+.sidebar.collapsed .menu-toggle {
+  justify-content: center;
+}
+
+.sidebar.collapsed .menu-main {
+  justify-content: center;
+  width: 100%;
+}
+
+.sidebar.collapsed .submenu {
+  display: none !important;
+}
