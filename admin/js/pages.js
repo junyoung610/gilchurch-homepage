@@ -1,100 +1,190 @@
-// TinyMCE 초기화
-tinymce.init({
-  selector: "#editor",
-
-  height: 600,
-
-  plugins: ["link", "image", "table", "lists", "code"],
-
-  toolbar:
-    "undo redo | styles | bold italic underline | " +
-    "alignleft aligncenter alignright | " +
-    "bullist numlist | " +
-    "link image table | code",
-});
-
-import { db } from "../../js/firebase.js";
+import { db } from "./firebase.js";
 
 import {
-  doc,
-  setDoc,
-  getDocs,
   collection,
+  addDoc,
+  getDocs,
+  getDoc,
+  updateDoc,
   deleteDoc,
+  doc,
+  query,
+  orderBy,
+  serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// 요소
-const title = document.getElementById("title");
+let editor;
+let editId = null;
 
-const slug = document.getElementById("slug");
-
-const content = document.getElementById("content");
-
-const saveBtn = document.getElementById("saveBtn");
-
+const form = document.getElementById("pageForm");
 const pageList = document.getElementById("pageList");
 
-// 저장
-saveBtn.addEventListener("click", async () => {
-  if (!slug.value) {
-    alert("Slug 입력");
+/* =====================
+   CKEditor
+===================== */
 
-    return;
-  }
+ClassicEditor.create(document.querySelector("#content"))
+  .then((newEditor) => {
+    editor = newEditor;
+  })
+  .catch(console.error);
 
-  await setDoc(doc(db, "pages", slug.value), {
-    title: title.value,
-    slug: slug.value,
+/* =====================
+   목록
+===================== */
 
-    content: tinymce.get("editor").getContent(),
+async function loadPages() {
+  pageList.innerHTML = "";
 
-    visible: true,
-    updatedAt: new Date(),
+  const q = query(collection(db, "pages"));
+
+  const snapshot = await getDocs(q);
+
+  snapshot.forEach((docSnap) => {
+    const page = docSnap.data();
+
+    pageList.innerHTML += `
+      <div class="page-item">
+
+        <div>
+          <strong>
+            ${page.title}
+          </strong>
+
+          <div>
+            /${page.slug}
+          </div>
+        </div>
+
+        <div class="page-actions">
+
+          <button
+            class="edit-btn"
+            data-id="${docSnap.id}"
+          >
+            수정
+          </button>
+
+          <button
+            class="delete-btn"
+            data-id="${docSnap.id}"
+          >
+            삭제
+          </button>
+
+        </div>
+
+      </div>
+    `;
   });
 
-  alert("저장 완료");
+  bindEvents();
+}
+
+/* =====================
+   이벤트 연결
+===================== */
+
+function bindEvents() {
+  document.querySelectorAll(".edit-btn").forEach((btn) => {
+    btn.onclick = () => {
+      editPage(btn.dataset.id);
+    };
+  });
+
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
+    btn.onclick = () => {
+      deletePage(btn.dataset.id);
+    };
+  });
+}
+
+/* =====================
+   저장
+===================== */
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    title: document.getElementById("title").value,
+
+    slug: document.getElementById("slug").value,
+
+    content: editor.getData(),
+
+    updatedAt: serverTimestamp(),
+
+    published: true,
+  };
+
+  if (editId) {
+    await updateDoc(doc(db, "pages", editId), data);
+
+    alert("수정 완료");
+  } else {
+    data.createdAt = serverTimestamp();
+
+    await addDoc(collection(db, "pages"), data);
+
+    alert("저장 완료");
+  }
+
+  resetForm();
 
   loadPages();
 });
 
-// 불러오기
-tinymce.get("editor").setContent(data.content);
+/* =====================
+   수정
+===================== */
 
-// 페이지목록
-async function loadPages() {
-  pageList.innerHTML = "";
+async function editPage(id) {
+  const snap = await getDoc(doc(db, "pages", id));
 
-  const snapshot = await getDocs(collection(db, "pages"));
+  if (!snap.exists()) return;
 
-  snapshot.forEach((docSnap) => {
-    const data = docSnap.data();
+  const data = snap.data();
 
-    const div = document.createElement("div");
+  editId = id;
 
-    div.innerHTML = `
-      <p>
-        ${data.title}
-        (${data.slug})
+  document.getElementById("title").value = data.title;
 
-        <button
-         data-id="${docSnap.id}">
-         삭제
-        </button>
-      </p>
-    `;
+  document.getElementById("slug").value = data.slug;
 
-    pageList.appendChild(div);
-  });
+  editor.setData(data.content || "");
+
+  document.querySelector('#pageForm button[type="submit"]').textContent = "수정 저장";
 }
 
-// 삭제
-pageList.addEventListener("click", async (e) => {
-  if (e.target.tagName === "BUTTON") {
-    await deleteDoc(doc(db, "pages", e.target.dataset.id));
+/* =====================
+   삭제
+===================== */
 
-    loadPages();
-  }
-});
+async function deletePage(id) {
+  if (!confirm("삭제하시겠습니까?")) return;
 
-// 실행
+  await deleteDoc(doc(db, "pages", id));
+
+  loadPages();
+}
+
+/* =====================
+   초기화
+===================== */
+
+function resetForm() {
+  form.reset();
+
+  editor.setData("");
+
+  editId = null;
+
+  document.querySelector('#pageForm button[type="submit"]').textContent = "저장";
+}
+
+/* =====================
+   시작
+===================== */
+
 loadPages();

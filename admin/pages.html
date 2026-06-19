@@ -5,9 +5,10 @@
     <title>페이지관리</title>
     <link rel="stylesheet" href="./css/admin.css" />
     <link rel="stylesheet" href="./css/sidebar.css" />
+    <link rel="stylesheet" href="./css/pages.css" />
 
     <script src="./js/sidebar-loader.js" defer></script>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
   </head>
   <body>
     <div class="layout">
@@ -21,20 +22,25 @@
         </div>
 
         <div class="page-layout">
+          <!-- 작성 -->
           <div class="card">
             <h2>페이지 작성</h2>
 
             <form id="pageForm">
-              <input type="text" id="title" placeholder="페이지 제목" />
+              <label>페이지 제목</label>
+              <input type="text" id="title" required />
 
-              <input type="text" id="slug" placeholder="URL Slug" />
+              <label>Slug(URL)</label>
+              <input type="text" id="slug" placeholder="history" required />
 
-              <textarea id="content" rows="12"></textarea>
+              <label>내용</label>
+              <textarea id="content"></textarea>
 
               <button type="submit">저장</button>
             </form>
           </div>
 
+          <!-- 목록 -->
           <div class="card">
             <h2>페이지 목록</h2>
 
