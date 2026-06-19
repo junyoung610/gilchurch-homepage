@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>새가족 수정</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+  <body>
+    <h1>새가족 수정</h1>
+
+    <form id="editForm">
+      <input type="text" id="name" placeholder="이름" />
+
+      <input type="text" id="phone" placeholder="연락처" />
+
+      <input type="text" id="inviter" placeholder="인도자" />
+
+      <select id="status">
+        <option value="첫방문">첫방문</option>
+
+        <option value="2주차">2주차</option>
+
+        <option value="4주차">4주차</option>
+
+        <option value="정착중">정착중</option>
+
+        <option value="등록완료">등록완료</option>
+      </select>
+
+      <textarea id="memo" placeholder="메모"></textarea>
+
+      <button type="submit">저장</button>
+    </form>
+
+    <script type="module" src="./js/newcomer-edit.js"></script>
+  </body>
+</html>

@@ -31,13 +31,15 @@ async function loadNewcomers() {
 
         <td>${data.status}</td>
 
-        <td>
+    <td>
 
-          <button>
-            수정
-          </button>
+  <a
+    href="./newcomer-edit.html?id=${docSnap.id}"
+  >
+    수정
+  </a>
 
-        </td>
+</td>
 
       </tr>
 
