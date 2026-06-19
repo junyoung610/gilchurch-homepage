@@ -19,17 +19,13 @@ async function loadMember() {
 
   document.getElementById("name").value = data.name || "";
 
-  document.getElementById("department").value = data.department || "";
-
-  document.getElementById("position").value = data.position || "";
-
   document.getElementById("phone").value = data.phone || "";
 
-  document.getElementById("address").value = data.address || "";
+  const departments = data.departments || [];
 
-  document.getElementById("birth").value = data.birth || "";
-
-  document.getElementById("baptized").value = String(data.baptized);
+  document.querySelectorAll('input[name="department"]').forEach((checkbox) => {
+    checkbox.checked = departments.includes(checkbox.value);
+  });
 }
 
 loadMember();
@@ -37,20 +33,18 @@ loadMember();
 document.getElementById("memberForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const departments = [];
+
+  document.querySelectorAll('input[name="department"]:checked').forEach((checkbox) => {
+    departments.push(checkbox.value);
+  });
+
   await updateDoc(doc(db, "members", id), {
     name: document.getElementById("name").value,
 
-    department: document.getElementById("department").value,
-
-    position: document.getElementById("position").value,
-
     phone: document.getElementById("phone").value,
 
-    address: document.getElementById("address").value,
-
-    birth: document.getElementById("birth").value,
-
-    baptized: document.getElementById("baptized").value === "true",
+    departments,
   });
 
   alert("저장 완료");

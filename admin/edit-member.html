@@ -1,9 +1,8 @@
 <!doctype html>
-
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>교인정보 수정</title>
+    <title>교인 수정</title>
     <link rel="stylesheet" href="./css/admin.css" />
   </head>
   <body>
@@ -13,37 +12,48 @@
       </aside>
 
       <main>
-        ```
-        <h1>교인정보 수정</h1>
+        <h1>교인 정보 수정</h1>
 
         <form id="memberForm">
           <label>이름</label>
           <input type="text" id="name" />
 
-          <label>부서</label>
-          <input type="text" id="department" />
+          <h3>소속 부서</h3>
 
-          <label>직분</label>
-          <input type="text" id="position" />
+          <label>
+            <input type="checkbox" name="department" value="청년부" />
+            청년부
+          </label>
+
+          <label>
+            <input type="checkbox" name="department" value="찬양팀" />
+            찬양팀
+          </label>
+
+          <label>
+            <input type="checkbox" name="department" value="유초등부" />
+            유초등부
+          </label>
+
+          <label>
+            <input type="checkbox" name="department" value="중고등부" />
+            중고등부
+          </label>
+
+          <label>
+            <input type="checkbox" name="department" value="새가족부" />
+            새가족부
+          </label>
+
+          <br /><br />
 
           <label>전화번호</label>
           <input type="text" id="phone" />
 
-          <label>주소</label>
-          <input type="text" id="address" />
-
-          <label>생년월일</label>
-          <input type="date" id="birth" />
-
-          <label>세례여부</label>
-          <select id="baptized">
-            <option value="true">세례</option>
-            <option value="false">미세례</option>
-          </select>
+          <br /><br />
 
           <button type="submit">저장</button>
         </form>
-        ```
       </main>
     </div>
 
