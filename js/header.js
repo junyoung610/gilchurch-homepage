@@ -1,4 +1,4 @@
-import { db } from "./firebase.js";
+import { db, auth } from "./firebase.js";
 
 import {
   doc,
@@ -9,8 +9,6 @@ import {
   orderBy,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-import { auth } from "./firebase.js";
-
 import {
   onAuthStateChanged,
   signOut,
@@ -19,6 +17,9 @@ import {
 export async function loadHeader() {
   const header = document.getElementById("header");
 
+  if (!header) return;
+
+  // 사이트 설정
   const siteSnap = await getDoc(doc(db, "settings", "site"));
 
   let logoUrl = "";
@@ -27,24 +28,24 @@ export async function loadHeader() {
     logoUrl = siteSnap.data().logo || "";
   }
 
+  // 메뉴 불러오기
   const snapshot = await getDocs(query(collection(db, "menus"), orderBy("order")));
 
   let html = `
+    <div class="container">
 
-  <div class="container">
+      <a
+        href="/gilchurch-homepage/index.html"
+        class="logo"
+      >
+        ${logoUrl ? `<img src="${logoUrl}" alt="교회 로고">` : "교회"}
+      </a>
 
-    <a href="index.html" class="logo">
-
-      ${logoUrl ? `<img src="${logoUrl}" alt="교회 로고">` : "교회"}
-
-    </a>
-
-    <nav>
-
+      <nav>
   `;
 
-  snapshot.forEach((doc) => {
-    const menu = doc.data();
+  snapshot.forEach((menuDoc) => {
+    const menu = menuDoc.data();
 
     html += `
       <a href="${menu.url}">
@@ -55,53 +56,48 @@ export async function loadHeader() {
 
   html += `
       </nav>
+
+      <div id="authArea"></div>
+
     </div>
   `;
 
-  html += `
-
-<div class="auth-menu">
-
-  <a href="/gilchurch-homepage/login.html">
-    로그인
-  </a>
-
-  <a
-    href="/gilchurch-homepage/register.html"
-    class="register-btn"
-  >
-    회원가입
-  </a>
-
-</div>
-
-`;
-
   header.innerHTML = html;
-}
 
-onAuthStateChanged(auth, (user) => {
   const authArea = document.getElementById("authArea");
 
-  if (user) {
-    authArea.innerHTML = `
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      authArea.innerHTML = `
+        <a href="/gilchurch-homepage/mypage.html">
+          마이페이지
+        </a>
 
-      <a href="/gilchurch-homepage/mypage.html">
-        마이페이지
-      </a>
+        <a href="#" id="logoutBtn">
+          로그아웃
+        </a>
+      `;
 
-      <a href="#" id="logoutBtn">
-        로그아웃
-      </a>
+      document.getElementById("logoutBtn")?.addEventListener("click", async (e) => {
+        e.preventDefault();
 
-    `;
+        await signOut(auth);
 
-    document.getElementById("logoutBtn").addEventListener("click", async (e) => {
-      e.preventDefault();
+        location.href = "/gilchurch-homepage/index.html";
+      });
+    } else {
+      authArea.innerHTML = `
+        <a href="/gilchurch-homepage/login.html">
+          로그인
+        </a>
 
-      await signOut(auth);
-
-      location.reload();
-    });
-  }
-});
+        <a
+          href="/gilchurch-homepage/register.html"
+          class="register-btn"
+        >
+          회원가입
+        </a>
+      `;
+    }
+  });
+}

@@ -330,3 +330,28 @@ footer {
 
   border-radius: 8px;
 }
+
+.auth-menu,
+#authArea {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+#authArea a {
+  text-decoration: none;
+
+  color: #333;
+}
+
+.register-btn {
+  background: #2563eb;
+
+  color: white !important;
+
+  padding: 10px 16px;
+
+  border-radius: 8px;
+}
