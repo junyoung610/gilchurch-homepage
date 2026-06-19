@@ -44,11 +44,20 @@ body {
 /* 사이드바 */
 .sidebar {
   width: 280px;
-  background: var(--sidebar);
-  color: white;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
+  transition: 0.3s;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .group-title {
+  display: none;
+}
+
+.sidebar.collapsed a span {
+  display: none;
 }
 
 .sidebar h2 {
@@ -152,6 +161,22 @@ body {
   cursor: pointer;
 
   font-weight: 600;
+}
+
+/* 접는기능 css */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+#toggleSidebar {
+  border: none;
+  background: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* 메뉴 */

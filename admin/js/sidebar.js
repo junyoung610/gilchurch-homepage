@@ -7,3 +7,23 @@ document.querySelectorAll(".sidebar a").forEach((link) => {
     link.classList.add("active");
   }
 });
+
+const toggleBtn = document.getElementById("toggleSidebar");
+
+const sidebar = document.querySelector(".sidebar");
+
+toggleBtn?.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+});
+
+const savedState = localStorage.getItem("sidebar");
+
+if (savedState === "collapsed") {
+  sidebar.classList.add("collapsed");
+}
+
+toggleBtn?.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+
+  localStorage.setItem("sidebar", sidebar.classList.contains("collapsed") ? "collapsed" : "open");
+});
