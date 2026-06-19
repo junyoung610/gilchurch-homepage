@@ -170,7 +170,9 @@ body {
 }
 
 .sidebar a.active {
-  background: var(--primary);
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
 }
 
 .logo-sub {
@@ -180,6 +182,26 @@ body {
 
 .content {
   max-width: 1400px;
+}
+
+/* 메뉴그룹 */
+.menu-group {
+  margin-bottom: 28px;
+}
+
+.group-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-left: 8px;
+}
+
+.menu-group a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* 메인 */
