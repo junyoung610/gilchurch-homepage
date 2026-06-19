@@ -546,3 +546,19 @@ select:focus {
 .sidebar.collapsed {
   width: 72px;
 }
+
+.sidebar.collapsed .menu-text {
+  display: none;
+}
+
+.sidebar.collapsed .menu-toggle span:first-child {
+  display: none;
+}
+
+.sidebar.collapsed .menu-toggle span:last-child {
+  display: none;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
