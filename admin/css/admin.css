@@ -96,6 +96,26 @@ main h1 {
   margin-bottom: 24px;
 }
 
+.quick-actions a {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  background: #2563eb;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  margin-right: 10px;
+}
+
 /* 카드 */
 .dashboard-card,
 .stat-card,
