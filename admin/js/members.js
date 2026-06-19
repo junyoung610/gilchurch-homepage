@@ -26,13 +26,11 @@ async function loadMembers() {
 
         <td>${member.phone || ""}</td>
 
-        <td>
-
-          <button>
-            수정
-          </button>
-
-        </td>
+       <td>
+  <a href="./edit-member.html?id=${docSnap.id}">
+    수정
+  </a>
+</td>
 
       </tr>
     `;

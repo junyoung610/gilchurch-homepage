@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>교인정보 수정</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>관리자</h2>
+      </aside>
+
+      <main>
+        ```
+        <h1>교인정보 수정</h1>
+
+        <form id="memberForm">
+          <label>이름</label>
+          <input type="text" id="name" />
+
+          <label>부서</label>
+          <input type="text" id="department" />
+
+          <label>직분</label>
+          <input type="text" id="position" />
+
+          <label>전화번호</label>
+          <input type="text" id="phone" />
+
+          <label>주소</label>
+          <input type="text" id="address" />
+
+          <label>생년월일</label>
+          <input type="date" id="birth" />
+
+          <label>세례여부</label>
+          <select id="baptized">
+            <option value="true">세례</option>
+            <option value="false">미세례</option>
+          </select>
+
+          <button type="submit">저장</button>
+        </form>
+        ```
+      </main>
+    </div>
+
+    <script type="module" src="./js/edit-member.js"></script>
+  </body>
+</html>
