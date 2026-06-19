@@ -2,201 +2,184 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>관리자 대시보드</title>
+
     <link rel="stylesheet" href="./css/admin.css" />
+
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
+
   <body>
     <div class="layout">
+      <!-- 사이드바 -->
+
       <aside class="sidebar">
-        <!-- 접기기능 -->
-        <!doctype html>
+        ```
+        <div class="sidebar-header">
+          <div>
+            <div class="admin-logo">⛪ Church CMS</div>
 
-        <html lang="ko">
-          <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <div class="logo-sub">Church Management System</div>
+          </div>
 
-            <title>관리자 대시보드</title>
+          <button id="toggleSidebar">☰</button>
+        </div>
 
-            <link rel="stylesheet" href="./css/admin.css" />
+        <!-- 대시보드 -->
+        <div class="menu-group">
+          <a href="./dashboard.html">
+            <span class="icon">🏠</span>
 
-            <script src="https://unpkg.com/lucide@latest"></script>
-          </head>
+            <span class="menu-text"> 대시보드 </span>
+          </a>
+        </div>
 
-          <body>
-            <div class="layout">
-              <!-- 사이드바 -->
+        <!-- 홈페이지 관리 -->
+        <div class="menu-group">
+          <div class="group-title">📄 홈페이지 관리</div>
 
-              <aside class="sidebar">
-                ```
-                <div class="sidebar-header">
-                  <div>
-                    <div class="admin-logo">⛪ Church CMS</div>
+          <a href="./menu.html">
+            <span class="icon">📋</span>
 
-                    <div class="logo-sub">Church Management System</div>
-                  </div>
+            <span class="menu-text"> 메뉴설정 </span>
+          </a>
 
-                  <button id="toggleSidebar">☰</button>
-                </div>
+          <a href="./homepage.html">
+            <span class="icon">🏡</span>
 
-                <!-- 대시보드 -->
-                <div class="menu-group">
-                  <a href="./dashboard.html">
-                    <span class="icon">🏠</span>
+            <span class="menu-text"> 메인페이지관리 </span>
+          </a>
 
-                    <span class="menu-text"> 대시보드 </span>
-                  </a>
-                </div>
+          <a href="./pages.html">
+            <span class="icon">📄</span>
 
-                <!-- 홈페이지 관리 -->
-                <div class="menu-group">
-                  <div class="group-title">📄 홈페이지 관리</div>
+            <span class="menu-text"> 페이지관리 </span>
+          </a>
 
-                  <a href="./menu.html">
-                    <span class="icon">📋</span>
+          <a href="./boards.html">
+            <span class="icon">📝</span>
 
-                    <span class="menu-text"> 메뉴설정 </span>
-                  </a>
+            <span class="menu-text"> 게시판관리 </span>
+          </a>
 
-                  <a href="./homepage.html">
-                    <span class="icon">🏡</span>
+          <a href="./videos.html">
+            <span class="icon">🎬</span>
 
-                    <span class="menu-text"> 메인페이지관리 </span>
-                  </a>
+            <span class="menu-text"> 영상관리 </span>
+          </a>
 
-                  <a href="./pages.html">
-                    <span class="icon">📄</span>
+          <a href="./settings.html">
+            <span class="icon">⚙️</span>
 
-                    <span class="menu-text"> 페이지관리 </span>
-                  </a>
+            <span class="menu-text"> 사이트설정 </span>
+          </a>
+        </div>
 
-                  <a href="./boards.html">
-                    <span class="icon">📝</span>
+        <!-- 교인 관리 -->
+        <div class="menu-group">
+          <div class="group-title">👥 교인 관리</div>
 
-                    <span class="menu-text"> 게시판관리 </span>
-                  </a>
+          <a href="./users.html">
+            <span class="icon">👤</span>
 
-                  <a href="./videos.html">
-                    <span class="icon">🎬</span>
+            <span class="menu-text"> 회원관리 </span>
+          </a>
 
-                    <span class="menu-text"> 영상관리 </span>
-                  </a>
+          <a href="./members.html">
+            <span class="icon">📒</span>
 
-                  <a href="./settings.html">
-                    <span class="icon">⚙️</span>
+            <span class="menu-text"> 교적관리 </span>
+          </a>
 
-                    <span class="menu-text"> 사이트설정 </span>
-                  </a>
-                </div>
+          <a href="./newfamily.html">
+            <span class="icon">🤝</span>
 
-                <!-- 교인 관리 -->
-                <div class="menu-group">
-                  <div class="group-title">👥 교인 관리</div>
+            <span class="menu-text"> 새가족관리 </span>
+          </a>
+        </div>
 
-                  <a href="./users.html">
-                    <span class="icon">👤</span>
+        <!-- 출석 관리 -->
+        <div class="menu-group">
+          <div class="group-title">📅 출석 관리</div>
 
-                    <span class="menu-text"> 회원관리 </span>
-                  </a>
+          <a href="./attendance.html">
+            <span class="icon">✅</span>
 
-                  <a href="./members.html">
-                    <span class="icon">📒</span>
+            <span class="menu-text"> 출석관리 </span>
+          </a>
 
-                    <span class="menu-text"> 교적관리 </span>
-                  </a>
+          <a href="./attendance-report.html">
+            <span class="icon">📊</span>
 
-                  <a href="./newfamily.html">
-                    <span class="icon">🤝</span>
-
-                    <span class="menu-text"> 새가족관리 </span>
-                  </a>
-                </div>
-
-                <!-- 출석 관리 -->
-                <div class="menu-group">
-                  <div class="group-title">📅 출석 관리</div>
-
-                  <a href="./attendance.html">
-                    <span class="icon">✅</span>
-
-                    <span class="menu-text"> 출석관리 </span>
-                  </a>
-
-                  <a href="./attendance-report.html">
-                    <span class="icon">📊</span>
-
-                    <span class="menu-text"> 출석통계 </span>
-                  </a>
-                </div>
-                ```
-              </aside>
-
-              <!-- 본문 -->
-
-              <main class="content">
-                ```
-                <div class="topbar">
-                  <div class="page-title">
-                    <h1>대시보드</h1>
-
-                    <p>교회 홈페이지 관리 시스템</p>
-                  </div>
-
-                  <div id="userInfo"></div>
-                </div>
-
-                <!-- 통계 -->
-                <div class="stats-grid">
-                  <div class="stat-card">
-                    <h3>📄 페이지</h3>
-
-                    <div class="count" id="pageCount">0</div>
-                  </div>
-
-                  <div class="stat-card">
-                    <h3>📝 게시글</h3>
-
-                    <div class="count" id="postCount">0</div>
-                  </div>
-
-                  <div class="stat-card">
-                    <h3>🎬 영상</h3>
-
-                    <div class="count" id="videoCount">0</div>
-                  </div>
-
-                  <div class="stat-card">
-                    <h3>📂 메뉴</h3>
-
-                    <div class="count" id="menuCount">0</div>
-                  </div>
-                </div>
-
-                <!-- 빠른 작업 -->
-                <div class="dashboard-card">
-                  <h2>빠른 작업</h2>
-
-                  <div class="quick-actions">
-                    <a href="./homepage.html"> 메인페이지 관리 </a>
-
-                    <a href="./pages.html"> 페이지 작성 </a>
-
-                    <a href="./boards.html"> 게시글 작성 </a>
-
-                    <a href="./videos.html"> 영상 등록 </a>
-                  </div>
-                </div>
-                ```
-              </main>
-            </div>
-
-            <script type="module" src="./js/dashboard.js"></script>
-
-            <script src="./js/sidebar.js"></script>
-          </body>
-        </html>
+            <span class="menu-text"> 출석통계 </span>
+          </a>
+        </div>
+        ```
       </aside>
+
+      <!-- 본문 -->
+
+      <main class="content">
+        ```
+        <div class="topbar">
+          <div class="page-title">
+            <h1>대시보드</h1>
+
+            <p>교회 홈페이지 관리 시스템</p>
+          </div>
+
+          <div id="userInfo"></div>
+        </div>
+
+        <!-- 통계 -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>📄 페이지</h3>
+
+            <div class="count" id="pageCount">0</div>
+          </div>
+
+          <div class="stat-card">
+            <h3>📝 게시글</h3>
+
+            <div class="count" id="postCount">0</div>
+          </div>
+
+          <div class="stat-card">
+            <h3>🎬 영상</h3>
+
+            <div class="count" id="videoCount">0</div>
+          </div>
+
+          <div class="stat-card">
+            <h3>📂 메뉴</h3>
+
+            <div class="count" id="menuCount">0</div>
+          </div>
+        </div>
+
+        <!-- 빠른 작업 -->
+        <div class="dashboard-card">
+          <h2>빠른 작업</h2>
+
+          <div class="quick-actions">
+            <a href="./homepage.html"> 메인페이지 관리 </a>
+
+            <a href="./pages.html"> 페이지 작성 </a>
+
+            <a href="./boards.html"> 게시글 작성 </a>
+
+            <a href="./videos.html"> 영상 등록 </a>
+          </div>
+        </div>
+        ```
+      </main>
     </div>
+
+    <script type="module" src="./js/dashboard.js"></script>
+
+    <script src="./js/sidebar.js"></script>
   </body>
 </html>
