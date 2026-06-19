@@ -28,10 +28,16 @@ toggleBtn?.addEventListener("click", () => {
   localStorage.setItem("sidebar", sidebar.classList.contains("collapsed") ? "collapsed" : "open");
 });
 
-const toggles = document.querySelectorAll(".menu-toggle");
-
-toggles.forEach((toggle) => {
+document.querySelectorAll(".menu-toggle").forEach((toggle) => {
   toggle.addEventListener("click", () => {
-    toggle.parentElement.classList.toggle("active");
+    const group = toggle.parentElement;
+
+    document.querySelectorAll(".menu-group").forEach((item) => {
+      if (item !== group) {
+        item.classList.remove("active");
+      }
+    });
+
+    group.classList.toggle("active");
   });
 });

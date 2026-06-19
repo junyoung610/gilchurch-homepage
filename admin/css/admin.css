@@ -43,6 +43,7 @@ body {
 
 /* 사이드바 */
 .sidebar {
+  width: 280px;
   background: #0f172a;
   color: white;
 }
@@ -229,6 +230,7 @@ body {
 }
 
 .logo-sub {
+  display: none;
   color: #94a3b8;
   font-size: 12px;
 }
@@ -501,13 +503,27 @@ select:focus {
 .menu-group.active .submenu {
   max-height: 400px;
 }
+
 .submenu a {
-  padding-left: 40px;
+  display: block;
+
+  padding: 10px 16px 10px 48px;
+
+  color: #cbd5e1;
+
+  text-decoration: none;
 
   font-size: 14px;
 
-  color: #cbd5e1;
+  border-radius: 8px;
+
+  margin: 4px 8px;
+
+  transition: 0.2s;
 }
+
 .submenu a:hover {
+  background: #1e293b;
+
   color: white;
 }
