@@ -15,29 +15,33 @@
       <!-- 사이드바 -->
       <div id="sidebar-container"></div>
 
-      <main>
-        <h1>페이지 관리</h1>
-
-        <div class="form-group">
-          <label>페이지 제목</label>
-          <input type="text" id="title" />
+      <main class="content">
+        <div class="page-header">
+          <h1>페이지 관리</h1>
+          <p>홈페이지 페이지를 생성하고 수정합니다.</p>
         </div>
 
-        <div class="form-group">
-          <label>Slug</label>
-          <input type="text" id="slug" />
+        <div class="page-layout">
+          <div class="card">
+            <h2>페이지 작성</h2>
+
+            <form id="pageForm">
+              <input type="text" id="title" placeholder="페이지 제목" />
+
+              <input type="text" id="slug" placeholder="URL Slug" />
+
+              <textarea id="content" rows="12"></textarea>
+
+              <button type="submit">저장</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h2>페이지 목록</h2>
+
+            <div id="pageList"></div>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label>내용</label>
-          <textarea id="editor"></textarea>
-        </div>
-
-        <button id="saveBtn">저장</button>
-
-        <hr />
-
-        <div id="pageList"></div>
       </main>
     </div>
     <script type="module" src="./js/pages.js"></script>
