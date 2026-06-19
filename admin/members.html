@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>교적관리</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>관리자</h2>
+
+        <ul>
+          <li><a href="./dashboard.html">대시보드</a></li>
+          <li><a href="./users.html">회원관리</a></li>
+          <li><a href="./members.html">교적관리</a></li>
+        </ul>
+      </aside>
+
+      <main>
+        <h1>교적관리</h1>
+
+        <table>
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>부서</th>
+              <th>직분</th>
+              <th>전화번호</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+
+          <tbody id="memberTable"></tbody>
+        </table>
+      </main>
+    </div>
+
+    <script type="module" src="./js/members.js"></script>
+  </body>
+</html>
