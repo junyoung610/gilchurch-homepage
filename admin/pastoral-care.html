@@ -4,32 +4,41 @@
     <meta charset="UTF-8" />
     <title>심방기록</title>
     <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
+
+    <script src="./js/sidebar.js" defer></script>
+    <script src="./js/sidebar-loader.js" defer></script>
   </head>
   <body>
-    <h1>심방기록</h1>
+    <div class="layout">
+      <!-- 사이드바 -->
+      <div id="sidebar-container"></div>
+      <main>
+        <h1>심방기록</h1>
 
-    <form id="careForm">
-      <label>심방일</label>
-      <input type="date" id="visitDate" />
+        <form id="careForm">
+          <label>심방일</label>
+          <input type="date" id="visitDate" />
 
-      <label>기도제목</label>
-      <textarea id="prayer"></textarea>
+          <label>기도제목</label>
+          <textarea id="prayer"></textarea>
 
-      <label>상담내용</label>
-      <textarea id="counsel"></textarea>
+          <label>상담내용</label>
+          <textarea id="counsel"></textarea>
 
-      <label>특이사항</label>
-      <textarea id="note"></textarea>
+          <label>특이사항</label>
+          <textarea id="note"></textarea>
 
-      <button type="submit">저장</button>
-    </form>
+          <button type="submit">저장</button>
+        </form>
 
-    <hr />
+        <hr />
 
-    <h2>심방 이력</h2>
+        <h2>심방 이력</h2>
 
-    <div id="historyList"></div>
-
+        <div id="historyList"></div>
+      </main>
+    </div>
     <script type="module" src="./js/pastoral-care.js"></script>
   </body>
 </html>

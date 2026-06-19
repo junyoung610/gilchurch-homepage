@@ -4,19 +4,16 @@
     <meta charset="UTF-8" />
     <title>교적관리</title>
     <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
+
+    <script src="./js/sidebar.js" defer></script>
+    <script src="./js/sidebar-loader.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   </head>
   <body>
     <div class="layout">
-      <aside class="sidebar">
-        <h2>관리자</h2>
-
-        <ul>
-          <li><a href="./dashboard.html">대시보드</a></li>
-          <li><a href="./users.html">회원관리</a></li>
-          <li><a href="./members.html">교적관리</a></li>
-        </ul>
-      </aside>
+      <!-- 사이드바 -->
+      <div id="sidebar-container"></div>
 
       <main>
         <h1>교적관리</h1>

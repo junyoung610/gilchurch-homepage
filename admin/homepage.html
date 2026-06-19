@@ -4,21 +4,15 @@
     <meta charset="UTF-8" />
     <title>메인페이지 관리</title>
     <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
+
+    <script src="./js/sidebar.js" defer></script>
+    <script src="./js/sidebar-loader.js" defer></script>
   </head>
   <body>
     <div class="layout">
-      <aside class="sidebar">
-        <h2>관리자</h2>
-        <ul>
-          <li><a href="./dashboard.html">대시보드</a></li>
-          <li><a href="./menu.html">메뉴설정</a></li>
-          <li><a href="./homepage.html"> 메인페이지관리 </a></li>
-          <li><a href="./pages.html">페이지관리</a></li>
-          <li><a href="./boards.html">게시판관리</a></li>
-          <li><a href="./videos.html">영상관리</a></li>
-          <li><a href="./settings.html">사이트설정</a></li>
-        </ul>
-      </aside>
+      <!-- 사이드바 -->
+      <div id="sidebar-container"></div>
 
       <main>
         <h1>메인페이지 관리</h1>
