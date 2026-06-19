@@ -252,3 +252,37 @@
 .menu-group {
   margin-bottom: 8px;
 }
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+
+  padding: 20px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#toggleSidebar {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+#toggleSidebar:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
