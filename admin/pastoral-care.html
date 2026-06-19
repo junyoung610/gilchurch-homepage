@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>심방기록</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+  <body>
+    <h1>심방기록</h1>
+
+    <form id="careForm">
+      <label>심방일</label>
+      <input type="date" id="visitDate" />
+
+      <label>기도제목</label>
+      <textarea id="prayer"></textarea>
+
+      <label>상담내용</label>
+      <textarea id="counsel"></textarea>
+
+      <label>특이사항</label>
+      <textarea id="note"></textarea>
+
+      <button type="submit">저장</button>
+    </form>
+
+    <hr />
+
+    <h2>심방 이력</h2>
+
+    <div id="historyList"></div>
+
+    <script type="module" src="./js/pastoral-care.js"></script>
+  </body>
+</html>

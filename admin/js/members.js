@@ -64,6 +64,11 @@ function renderMembers() {
     수정
   </a>
 
+<a
+ href="./pastoral-care.html?id=${member.id}">
+ 심방기록
+</a>
+
   <button
     class="delete-btn"
     data-id="${member.id}"
