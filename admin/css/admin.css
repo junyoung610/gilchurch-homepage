@@ -43,9 +43,8 @@ body {
 
 /* 사이드바 */
 .sidebar {
-  width: 280px;
-  transition: 0.3s;
-  overflow: hidden;
+  background: #0f172a;
+  color: white;
 }
 
 .sidebar.collapsed {
@@ -193,32 +192,33 @@ body {
 /* 접는기능 css */
 .sidebar-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
   margin-bottom: 30px;
 }
 
 #toggleSidebar {
+  width: 36px;
+  height: 36px;
+
   border: none;
-  background: none;
+
+  border-radius: 8px;
+
+  background: #1e293b;
+
   color: white;
-  font-size: 20px;
-  cursor: pointer;
 }
 
 /* 메뉴 */
 .sidebar a {
-  display: flex;
-  align-items: center;
-  padding: 14px 18px;
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-  transition: 0.2s;
+  color: #cbd5e1;
 }
 
 .sidebar a:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: #1e293b;
+  color: white;
 }
 
 .sidebar a.active {
@@ -234,7 +234,8 @@ body {
 }
 
 .content {
-  max-width: 1400px;
+  padding: 40px;
+  width: 100%;
 }
 
 /* 메뉴그룹 */
