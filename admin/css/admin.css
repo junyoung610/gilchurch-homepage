@@ -527,3 +527,27 @@ select:focus {
 
   color: white;
 }
+
+.sidebar.collapsed .menu-text,
+.sidebar.collapsed .group-title,
+.sidebar.collapsed .logo-sub,
+.sidebar.collapsed .submenu {
+  display: none;
+}
+
+.sidebar.collapsed a {
+  justify-content: center;
+  padding: 14px 0;
+}
+
+.sidebar.collapsed .admin-logo {
+  font-size: 0;
+}
+.sidebar.collapsed .admin-logo::before {
+  content: "⛪";
+  font-size: 26px;
+}
+
+.sidebar.collapsed {
+  width: 72px;
+}
