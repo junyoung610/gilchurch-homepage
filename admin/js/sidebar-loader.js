@@ -7,7 +7,6 @@ async function loadSidebar() {
 
   container.innerHTML = html;
 
-  // 사이드바 JS 다시 실행
   const script = document.createElement("script");
   script.src = "./js/sidebar.js";
   document.body.appendChild(script);
