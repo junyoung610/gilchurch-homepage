@@ -44,15 +44,58 @@ export async function loadHeader() {
       <nav>
   `;
 
+  const menus = [];
+
   snapshot.forEach((menuDoc) => {
-    const menu = menuDoc.data();
+    menus.push({
+      id: menuDoc.id,
+      ...menuDoc.data(),
+    });
+  });
+
+  const mains = menus.filter((menu) => menu.type === "main");
+
+  html += `<ul class="main-menu">`;
+
+  mains.forEach((main) => {
+    const subs = menus.filter((menu) => menu.parentId === main.id);
 
     html += `
-      <a href="${menu.url}">
-        ${menu.title}
+    <li class="menu-item">
+
+      <a href="${main.url}">
+        ${main.title}
       </a>
+  `;
+
+    if (subs.length > 0) {
+      html += `
+      <ul class="submenu">
     `;
+
+      subs.forEach((sub) => {
+        html += `
+        <li>
+          <a href="${sub.url}">
+            ${sub.title}
+          </a>
+        </li>
+      `;
+      });
+
+      html += `
+      </ul>
+    `;
+    }
+
+    html += `
+    </li>
+  `;
   });
+
+  html += `
+  </ul>
+`;
 
   html += `
       </nav>
