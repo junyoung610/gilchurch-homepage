@@ -1,11 +1,14 @@
 const currentPage = location.pathname.split("/").pop();
 
-document.querySelectorAll(".sidebar a").forEach((link) => {
-  const href = link.getAttribute("href");
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggleSidebar");
+  const sidebar = document.querySelector(".sidebar");
 
-  if (href === currentPage) {
-    link.classList.add("active");
-  }
+  if (!toggleBtn || !sidebar) return;
+
+  toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+  });
 });
 
 const toggleBtn = document.getElementById("toggleSidebar");
