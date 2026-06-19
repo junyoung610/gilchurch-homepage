@@ -1,3 +1,4 @@
+javascript;
 import { db } from "./firebase.js";
 
 import {
@@ -5,16 +6,16 @@ import {
   addDoc,
   getDocs,
   getDoc,
+  updateDoc,
   deleteDoc,
   doc,
   query,
   where,
   orderBy,
-  updateDoc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 /* ==========================
-HTML 요소 가져오기
+   DOM
 ========================== */
 
 const form = document.getElementById("menuForm");
@@ -28,9 +29,7 @@ const parentMenu = document.getElementById("parentMenu");
 let editId = null;
 
 /* ==========================
-메뉴유형 변경
-main → 상위메뉴 숨김
-sub → 상위메뉴 표시
+   메뉴유형 변경
 ========================== */
 
 typeSelect.addEventListener("change", () => {
@@ -38,8 +37,7 @@ typeSelect.addEventListener("change", () => {
 });
 
 /* ==========================
-메인메뉴 목록 불러오기
-(서브메뉴 생성용)
+   상위메뉴 로드
 ========================== */
 
 async function loadParentMenus() {
@@ -52,16 +50,16 @@ async function loadParentMenus() {
 
     if (data.type === "main") {
       parentMenu.innerHTML += `
-    <option value="${docSnap.id}">
-      ${data.title}
-    </option>
-  `;
+        <option value="${docSnap.id}">
+          ${data.title}
+        </option>
+      `;
     }
   });
 }
 
 /* ==========================
-메뉴 목록 출력
+   메뉴 목록 출력
 ========================== */
 
 async function loadMenus() {
@@ -80,8 +78,6 @@ async function loadMenus() {
     });
   });
 
-  /* 메인메뉴만 추출 */
-
   const mains = menus.filter((menu) => menu.type === "main");
 
   mains.forEach((main) => {
@@ -89,138 +85,173 @@ async function loadMenus() {
 
     div.className = "menu-item";
 
-    /* 메인메뉴 */
-
     div.innerHTML = `
-  <div class="menu-main">
+      <div class="menu-main">
 
-    <span>
-      📁 ${main.title}
-    </span>
+        <span>
+          📁 ${main.title}
+        </span>
 
-    <div class="menu-actions">
+        <div class="menu-actions">
 
-  <button
-    class="edit-btn"
-    data-id="${main.id}"
-  >
-    수정
-  </button>
+          <button
+            class="edit-btn"
+            data-id="${main.id}"
+          >
+            수정
+          </button>
 
-  <button
-    class="delete-btn"
-    data-id="${main.id}"
-  >
-    삭제
-  </button>
+          <button
+            class="delete-btn"
+            data-id="${main.id}"
+          >
+            삭제
+          </button>
 
-</div>
-`;
+        </div>
 
-    /* 해당 메인메뉴의 서브메뉴 */
+      </div>
+    `;
 
     const subs = menus.filter((menu) => menu.parentId === main.id);
 
     subs.forEach((sub) => {
       div.innerHTML += `
-    <div class="menu-sub">
+        <div class="menu-sub">
 
-      <span>
-        └ ${sub.title}
-      </span>
+          <span>
+            └ ${sub.title}
+          </span>
 
-    <div class="menu-actions">
+          <div class="menu-actions">
 
-  <button
-    class="edit-btn"
-    data-id="${sub.id}"
-  >
-    수정
-  </button>
+            <button
+              class="edit-btn"
+              data-id="${sub.id}"
+            >
+              수정
+            </button>
 
-  <button
-    class="delete-btn"
-    data-id="${sub.id}"
-  >
-    삭제
-  </button>
+            <button
+              class="delete-btn"
+              data-id="${sub.id}"
+            >
+              삭제
+            </button>
 
-</div>
-  `;
+          </div>
+
+        </div>
+      `;
     });
 
     menuList.appendChild(div);
   });
 
-  /* ==========================
-삭제 버튼 이벤트 연결
-========================== */
+  /* 삭제 이벤트 */
 
   menuList.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       deleteMenu(btn.dataset.id);
     });
   });
+
+  /* 수정 이벤트 */
+
+  menuList.querySelectorAll(".edit-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      editMenu(btn.dataset.id);
+    });
+  });
 }
 
 /* ==========================
-메뉴 저장
+   저장 / 수정
 ========================== */
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const title = document.getElementById("title").value;
+
+  const url = document.getElementById("url").value;
+
+  const type = document.getElementById("type").value;
+
+  const order = Number(document.getElementById("order").value);
+
+  const parentId = type === "sub" ? parentMenu.value : null;
+
   if (editId) {
     await updateDoc(doc(db, "menus", editId), {
-      title: document.getElementById("title").value,
-
-      url: document.getElementById("url").value,
-
-      type: document.getElementById("type").value,
-
-      parentId: document.getElementById("type").value === "sub" ? parentMenu.value : null,
-
-      order: Number(document.getElementById("order").value),
+      title,
+      url,
+      type,
+      parentId,
+      order,
     });
 
     alert("수정 완료");
-
-    editId = null;
   } else {
     await addDoc(collection(db, "menus"), {
-      title: document.getElementById("title").value,
-
-      url: document.getElementById("url").value,
-
-      type: document.getElementById("type").value,
-
-      parentId: document.getElementById("type").value === "sub" ? parentMenu.value : null,
-
-      order: Number(document.getElementById("order").value),
-
+      title,
+      url,
+      type,
+      parentId,
+      order,
       visible: true,
     });
 
-    alert("메뉴 저장");
+    alert("메뉴 저장 완료");
   }
 
-  alert("메뉴가 저장되었습니다.");
-
-  form.reset();
-
-  editId = null;
-
-  parentWrap.style.display = "none";
-
-  document.querySelector("#menuForm button").textContent = "메뉴 저장";
+  resetForm();
 
   await loadMenus();
-
   await loadParentMenus();
 });
 
 /* ==========================
-메뉴 삭제
+   수정
+========================== */
+
+async function editMenu(id) {
+  const menuRef = doc(db, "menus", id);
+
+  const snap = await getDoc(menuRef);
+
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+
+  editId = id;
+
+  document.getElementById("title").value = data.title;
+
+  document.getElementById("url").value = data.url;
+
+  document.getElementById("type").value = data.type;
+
+  document.getElementById("order").value = data.order;
+
+  if (data.type === "sub") {
+    parentWrap.style.display = "block";
+
+    parentMenu.value = data.parentId;
+  } else {
+    parentWrap.style.display = "none";
+  }
+
+  document.querySelector('#menuForm button[type="submit"]').textContent = "수정 저장";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+/* ==========================
+   삭제
 ========================== */
 
 async function deleteMenu(id) {
@@ -236,8 +267,6 @@ async function deleteMenu(id) {
     const ok = confirm(`"${menuData.title}" 메뉴를 삭제하시겠습니까?`);
 
     if (!ok) return;
-
-    /* 메인메뉴 삭제 */
 
     if (menuData.type === "main") {
       const ok2 = confirm("연결된 서브메뉴도 모두 삭제됩니다.");
@@ -266,43 +295,22 @@ async function deleteMenu(id) {
 }
 
 /* ==========================
-최초 실행
+   폼 초기화
+========================== */
+
+function resetForm() {
+  form.reset();
+
+  editId = null;
+
+  parentWrap.style.display = "none";
+
+  document.querySelector('#menuForm button[type="submit"]').textContent = "메뉴 저장";
+}
+
+/* ==========================
+   최초 실행
 ========================== */
 
 loadMenus();
-
 loadParentMenus();
-
-menuList.querySelectorAll(".edit-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    editMenu(btn.dataset.id);
-  });
-});
-
-async function editMenu(id) {
-  const menuRef = doc(db, "menus", id);
-
-  const snap = await getDoc(menuRef);
-
-  if (!snap.exists()) return;
-
-  const data = snap.data();
-
-  editId = id;
-
-  document.getElementById("title").value = data.title;
-
-  document.getElementById("url").value = data.url;
-
-  document.getElementById("type").value = data.type;
-
-  document.getElementById("order").value = data.order;
-
-  if (data.type === "sub") {
-    parentWrap.style.display = "block";
-
-    parentMenu.value = data.parentId;
-  }
-
-  document.querySelector("#menuForm button").textContent = "수정 저장";
-}
