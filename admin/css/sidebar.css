@@ -18,6 +18,27 @@
 
 .menu-toggle {
   width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 18px;
+
+  background: none;
+  border: none;
+
+  color: white;
+
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
 }
 
 .submenu {
@@ -165,17 +186,13 @@
 .submenu a {
   display: block;
 
-  position: relative;
-
-  padding: 10px 15px 10px 48px;
-
-  font-size: 14px;
+  padding: 10px 20px 10px 42px;
 
   color: #94a3b8;
 
   text-decoration: none;
 
-  transition: all 0.2s ease;
+  font-size: 14px;
 }
 
 .submenu {
@@ -221,6 +238,17 @@
   transition: 0.3s;
 }
 
+.submenu a.active {
+  background: #2563eb;
+  color: white;
+
+  border-radius: 8px;
+}
+
 .menu-group.active .arrow {
   transform: rotate(180deg);
+}
+
+.menu-group {
+  margin-bottom: 8px;
 }
