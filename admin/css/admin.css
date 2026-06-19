@@ -316,3 +316,19 @@ th {
 
   border-radius: 8px;
 }
+
+.attendance-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.attendance-item {
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.attendance-item input {
+  margin-right: 10px;
+}

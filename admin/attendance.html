@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>출석관리</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>관리자</h2>
+
+        <ul>
+          <li><a href="./dashboard.html">대시보드</a></li>
+          <li><a href="./users.html">회원관리</a></li>
+          <li><a href="./members.html">교적관리</a></li>
+          <li><a href="./attendance.html">출석관리</a></li>
+        </ul>
+      </aside>
+
+      <main>
+        <h1>출석관리</h1>
+
+        <div class="attendance-toolbar">
+          <input type="date" id="attendanceDate" />
+
+          <button id="loadBtn">출석 불러오기</button>
+
+          <button id="saveBtn">출석 저장</button>
+        </div>
+
+        <div id="attendanceList"></div>
+      </main>
+    </div>
+
+    <script type="module" src="./js/attendance.js"></script>
+  </body>
+</html>
