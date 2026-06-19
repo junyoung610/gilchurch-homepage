@@ -20,7 +20,7 @@ async function loadMembers() {
 
         <td>${member.name || ""}</td>
 
-        <td>${member.department || ""}</td>
+        <td>  ${(member.departments || []).join(", ")}</td>
 
         <td>${member.position || ""}</td>
 
