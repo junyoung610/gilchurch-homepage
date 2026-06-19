@@ -562,3 +562,25 @@ select:focus {
 .sidebar.collapsed {
   width: 70px;
 }
+.sidebar.collapsed #toggleSidebar {
+  display: none;
+}
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+}
+.sidebar.collapsed .icon {
+  font-size: 22px;
+}
+.sidebar.collapsed a {
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+}
+
+.sidebar.collapsed .group-title {
+  display: none;
+}
