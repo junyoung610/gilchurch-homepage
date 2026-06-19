@@ -60,15 +60,35 @@ onAuthStateChanged(auth, async (user) => {
 
     document.getElementById("userInfo").innerHTML = `
 
+<div class="user-panel">
+
+  <div class="user-box">
+
+    <div class="avatar">
+      👤
+    </div>
+
+    <div>
+
       <div class="user-name">
-        ${data.name || "관리자"}
+        ${data.name}
       </div>
 
       <div class="user-role">
-        ${data.role || "Admin"}
+        ${data.role}
       </div>
 
-    `;
+    </div>
+
+  </div>
+
+  <button id="logoutBtn">
+    로그아웃
+  </button>
+
+</div>
+
+`;
 
     await loadStats();
   } catch (error) {
