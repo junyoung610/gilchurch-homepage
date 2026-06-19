@@ -1,14 +1,18 @@
+/* =============================================
+   SIDEBAR — 메인 컨테이너
+   ============================================= */
 .sidebar {
   width: 280px;
   background: #0f172a;
   color: white;
+  display: flex;
+  flex-direction: column;
   transition: 0.3s;
 }
 
-.sidebar.collapsed {
-  width: 70px;
-}
-
+/* =============================================
+   SIDEBAR — 헤더 영역 (로고 + 서브텍스트)
+   ============================================= */
 .sidebar-header {
   display: flex;
   justify-content: space-between;
@@ -16,76 +20,10 @@
   padding: 20px;
 }
 
-.menu-toggle {
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 14px 18px;
-
-  background: none;
-  border: none;
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
-}
-
-.submenu {
-  max-height: 0;
-  overflow: hidden;
-}
-
-.menu-group.active .submenu {
-  max-height: 400px;
-}
-
-.icon {
-  min-width: 24px;
-  text-align: center;
-}
-
-.menu-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.sidebar.collapsed .menu-text {
-  display: none;
-}
-
-.sidebar.collapsed .arrow {
-  display: none;
-}
-
-.sidebar.collapsed .submenu {
-  display: none;
-}
-
-.sidebar.collapsed .menu-toggle {
-  justify-content: center;
-}
-
-.sidebar.collapsed a {
-  justify-content: center;
-}
-
 .admin-logo {
   display: flex;
   align-items: center;
   gap: 10px;
-
   font-size: 30px;
   font-weight: 700;
 }
@@ -106,10 +44,154 @@
   margin-bottom: 20px;
 }
 
-.sidebar.collapsed {
-  width: 80px;
+/* =============================================
+   SIDEBAR — 메뉴 그룹 (각 섹션 묶음)
+   ============================================= */
+.menu-group {
+  margin-bottom: 8px;
 }
 
+/* =============================================
+   SIDEBAR — 메뉴 토글 버튼 (서브메뉴 여닫기)
+   ============================================= */
+.menu-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 12px;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =============================================
+   SIDEBAR — 메뉴 아이콘 + 텍스트 묶음
+   ============================================= */
+.icon {
+  min-width: 24px;
+  text-align: center;
+}
+
+.menu-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* =============================================
+   SIDEBAR — 화살표 (서브메뉴 열림 시 회전)
+   ============================================= */
+.arrow {
+  transition: 0.3s;
+}
+
+.menu-group.active .arrow {
+  transform: rotate(180deg);
+}
+
+/* =============================================
+   SIDEBAR — 서브메뉴 (드롭다운)
+   ============================================= */
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* 열림 상태: max-height 늘려서 슬라이드 다운 */
+.menu-group.active .submenu {
+  max-height: 500px;
+}
+
+/* 서브메뉴 왼쪽 세로 가이드라인 */
+.submenu::before {
+  content: "";
+  position: absolute;
+  left: 28px;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.submenu a {
+  display: block;
+  padding: 10px 20px 10px 42px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.submenu a:hover {
+  color: white;
+  background: rgba(59, 130, 246, 0.15);
+}
+
+/* =============================================
+   SIDEBAR — 활성(active) 메뉴 강조
+   ============================================= */
+.submenu a.active,
+.menu-group > a.active {
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* 일반 링크 hover */
+.menu-group a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* =============================================
+   SIDEBAR — 푸터 (하단 접기 버튼)
+   ============================================= */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#toggleSidebar {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#toggleSidebar:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+/* =============================================
+   COLLAPSED 상태 — 사이드바 접힘 (아이콘만 표시)
+   ============================================= */
+.sidebar.collapsed {
+  width: 88px;
+}
+
+/* 헤더: 로고 아이콘만 중앙 정렬 */
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+}
+
+/* 텍스트 요소 숨기기 */
 .sidebar.collapsed .logo-text,
 .sidebar.collapsed .logo-sub,
 .sidebar.collapsed .menu-text,
@@ -117,6 +199,12 @@
   display: none;
 }
 
+/* 서브메뉴 완전히 숨기기 */
+.sidebar.collapsed .submenu {
+  display: none !important;
+}
+
+/* 링크 / 토글: 중앙 정렬 */
 .sidebar.collapsed a,
 .sidebar.collapsed .menu-toggle {
   justify-content: center;
@@ -127,188 +215,28 @@
   width: 100%;
 }
 
-.sidebar.collapsed .submenu {
-  display: none !important;
-}
-
+/* 메뉴 아이템: 아이콘 전용 정사각형 버튼 */
 .sidebar.collapsed .menu-group > a,
 .sidebar.collapsed .menu-toggle {
   width: 52px;
   height: 52px;
-
   margin: 8px auto;
-
   border-radius: 14px;
-
   background: rgba(255, 255, 255, 0.06);
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   transition: 0.2s;
 }
 
+/* 접힘 상태 hover: 파란 계열 + 위로 살짝 이동 */
 .sidebar.collapsed .menu-group > a:hover,
 .sidebar.collapsed .menu-toggle:hover {
   background: rgba(59, 130, 246, 0.2);
   transform: translateY(-2px);
 }
 
+/* 접힘 상태 아이콘 크기 확대 */
 .sidebar.collapsed .icon {
   font-size: 22px;
-}
-
-.sidebar.collapsed {
-  width: 88px;
-}
-
-.sidebar.collapsed .sidebar-header {
-  justify-content: center;
-}
-
-.sidebar.collapsed .logo-text,
-.sidebar.collapsed .logo-sub {
-  display: none;
-}
-
-.submenu {
-  max-height: 0;
-  overflow: hidden;
-
-  transition: all 0.3s ease;
-}
-
-.menu-group.active .submenu {
-  max-height: 500px;
-}
-
-.submenu a {
-  display: block;
-
-  padding: 10px 20px 10px 42px;
-
-  color: #94a3b8;
-
-  text-decoration: none;
-
-  font-size: 14px;
-}
-
-.submenu {
-  position: relative;
-}
-
-.submenu::before {
-  content: "";
-
-  position: absolute;
-
-  left: 28px;
-
-  top: 10px;
-
-  bottom: 10px;
-
-  width: 1px;
-
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.submenu a:hover {
-  color: white;
-
-  background: rgba(59, 130, 246, 0.15);
-
-  border-radius: 8px;
-}
-
-.submenu a.active,
-.menu-group > a.active {
-  background: #2563eb;
-
-  color: white;
-
-  border-radius: 8px;
-
-  font-weight: 600;
-}
-
-.arrow {
-  transition: 0.3s;
-}
-
-.submenu a.active {
-  background: #2563eb;
-  color: white;
-
-  border-radius: 8px;
-}
-
-.menu-group.active .arrow {
-  transform: rotate(180deg);
-}
-
-.menu-group {
-  margin-bottom: 8px;
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-footer {
-  margin-top: auto;
-
-  padding: 20px;
-
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-#toggleSidebar {
-  width: 100%;
-  height: 48px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  background: rgba(255, 255, 255, 0.06);
-
-  color: white;
-
-  cursor: pointer;
-
-  transition: 0.2s;
-}
-
-#toggleSidebar:hover {
-  background: rgba(59, 130, 246, 0.2);
-}
-.menu-toggle,
-a.menu-toggle {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background: transparent;
-  border: none;
-  color: white;
-
-  padding: 14px 18px;
-
-  cursor: pointer;
-  text-decoration: none;
-
-  border-radius: 12px;
-}
-.menu-group a.active {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.menu-group a:hover,
-.menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.08);
 }
