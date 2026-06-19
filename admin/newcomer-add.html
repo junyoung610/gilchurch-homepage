@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>새가족 등록</title>
+    <link rel="stylesheet" href="./css/admin.css" />
+  </head>
+  <body>
+    <h1>새가족 등록</h1>
+
+    <form id="newcomerForm">
+      <input type="text" id="name" placeholder="이름" required />
+
+      <input type="text" id="phone" placeholder="연락처" />
+
+      <input type="date" id="birth" />
+
+      <input type="text" id="inviter" placeholder="인도자" />
+
+      <textarea id="memo" placeholder="메모"></textarea>
+
+      <button type="submit">저장</button>
+    </form>
+
+    <script type="module" src="./js/newcomer-add.js"></script>
+  </body>
+</html>
