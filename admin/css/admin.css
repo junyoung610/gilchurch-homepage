@@ -85,6 +85,15 @@ body {
   background: var(--primary);
 }
 
+.logo-sub {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.content {
+  max-width: 1400px;
+}
+
 /* 메인 */
 main {
   flex: 1;
@@ -126,6 +135,14 @@ main h1 {
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.08),
     0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.stat-card {
+  transition: 0.25s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
 }
 
 /* 통계카드 */
