@@ -1,5 +1,19 @@
 const currentPage = location.pathname.split("/").pop();
 
+document.querySelectorAll(".submenu a, .menu-group > a").forEach((link) => {
+  const href = link.getAttribute("href");
+
+  if (href === currentPage) {
+    link.classList.add("active");
+
+    const group = link.closest(".menu-group");
+
+    if (group) {
+      group.classList.add("active");
+    }
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const sidebar = document.querySelector(".sidebar");
   const toggleBtn = document.getElementById("toggleSidebar");
