@@ -44,7 +44,7 @@
 }
 
 .card button {
-  width: 100%;
+  width: 30%;
   border: none;
   padding: 14px;
   background: #2563eb;
@@ -98,4 +98,27 @@
 
 .delete-btn:hover {
   opacity: 0.85;
+}
+
+.menu-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.edit-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
 }

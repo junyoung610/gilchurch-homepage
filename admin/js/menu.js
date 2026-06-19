@@ -10,6 +10,7 @@ import {
   query,
   where,
   orderBy,
+  updateDoc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 /* ==========================
@@ -23,6 +24,8 @@ const typeSelect = document.getElementById("type");
 
 const parentWrap = document.getElementById("parentWrap");
 const parentMenu = document.getElementById("parentMenu");
+
+let editId = null;
 
 /* ==========================
 메뉴유형 변경
@@ -95,14 +98,23 @@ async function loadMenus() {
       📁 ${main.title}
     </span>
 
-    <button
-      class="delete-btn"
-      data-id="${main.id}"
-    >
-      삭제
-    </button>
+    <div class="menu-actions">
 
-  </div>
+  <button
+    class="edit-btn"
+    data-id="${main.id}"
+  >
+    수정
+  </button>
+
+  <button
+    class="delete-btn"
+    data-id="${main.id}"
+  >
+    삭제
+  </button>
+
+</div>
 `;
 
     /* 해당 메인메뉴의 서브메뉴 */
@@ -117,14 +129,23 @@ async function loadMenus() {
         └ ${sub.title}
       </span>
 
-      <button
-        class="delete-btn"
-        data-id="${sub.id}"
-      >
-        삭제
-      </button>
+    <div class="menu-actions">
 
-    </div>
+  <button
+    class="edit-btn"
+    data-id="${sub.id}"
+  >
+    수정
+  </button>
+
+  <button
+    class="delete-btn"
+    data-id="${sub.id}"
+  >
+    삭제
+  </button>
+
+</div>
   `;
     });
 
@@ -149,25 +170,49 @@ async function loadMenus() {
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  await addDoc(collection(db, "menus"), {
-    title: document.getElementById("title").value,
+  if (editId) {
+    await updateDoc(doc(db, "menus", editId), {
+      title: document.getElementById("title").value,
 
-    url: document.getElementById("url").value,
+      url: document.getElementById("url").value,
 
-    type: document.getElementById("type").value,
+      type: document.getElementById("type").value,
 
-    parentId: document.getElementById("type").value === "sub" ? parentMenu.value : null,
+      parentId: document.getElementById("type").value === "sub" ? parentMenu.value : null,
 
-    order: Number(document.getElementById("order").value),
+      order: Number(document.getElementById("order").value),
+    });
 
-    visible: true,
-  });
+    alert("수정 완료");
+
+    editId = null;
+  } else {
+    await addDoc(collection(db, "menus"), {
+      title: document.getElementById("title").value,
+
+      url: document.getElementById("url").value,
+
+      type: document.getElementById("type").value,
+
+      parentId: document.getElementById("type").value === "sub" ? parentMenu.value : null,
+
+      order: Number(document.getElementById("order").value),
+
+      visible: true,
+    });
+
+    alert("메뉴 저장");
+  }
 
   alert("메뉴가 저장되었습니다.");
 
   form.reset();
 
+  editId = null;
+
   parentWrap.style.display = "none";
+
+  document.querySelector("#menuForm button").textContent = "메뉴 저장";
 
   await loadMenus();
 
@@ -227,3 +272,37 @@ async function deleteMenu(id) {
 loadMenus();
 
 loadParentMenus();
+
+menuList.querySelectorAll(".edit-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    editMenu(btn.dataset.id);
+  });
+});
+
+async function editMenu(id) {
+  const menuRef = doc(db, "menus", id);
+
+  const snap = await getDoc(menuRef);
+
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+
+  editId = id;
+
+  document.getElementById("title").value = data.title;
+
+  document.getElementById("url").value = data.url;
+
+  document.getElementById("type").value = data.type;
+
+  document.getElementById("order").value = data.order;
+
+  if (data.type === "sub") {
+    parentWrap.style.display = "block";
+
+    parentMenu.value = data.parentId;
+  }
+
+  document.querySelector("#menuForm button").textContent = "수정 저장";
+}
