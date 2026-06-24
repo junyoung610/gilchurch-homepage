@@ -1,6 +1,5 @@
 import { db } from "./firebase.js";
 import { loadHeader } from "./header.js";
-
 import {
   collection,
   getDocs,
@@ -8,12 +7,12 @@ import {
   where,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+// 헤더 로드
 await loadHeader();
 
 /* =========================
-URL slug
-========================= */
-
+   URL Slug 확인
+   ========================= */
 const slug = new URLSearchParams(location.search).get("slug");
 
 if (!slug) {
@@ -21,117 +20,86 @@ if (!slug) {
 }
 
 /* =========================
-게시판 조회
-========================= */
-
+   게시판 정보 조회 및 출력
+   ========================= */
 const boardQuery = query(collection(db, "boards"), where("slug", "==", slug));
-
 const boardSnapshot = await getDocs(boardQuery);
 
 if (boardSnapshot.empty) {
   document.getElementById("boardTitle").textContent = "게시판이 존재하지 않습니다.";
-
   throw new Error("게시판 없음");
 }
 
 const boardDoc = boardSnapshot.docs[0];
 const board = boardDoc.data();
 
-/* =========================
-게시판 정보 출력
-========================= */
-
 document.getElementById("boardTitle").textContent = board.name;
-
 document.getElementById("boardDescription").textContent = board.description || "";
 
-const allPosts = await getDocs(collection(db, "posts"));
-
-allPosts.forEach((docSnap) => {
-  console.log("게시글:", docSnap.data().title, "boardId:", docSnap.data().boardId);
-});
-
 /* =========================
-게시글 조회
-========================= */
-
-const postQuery = query(collection(db, "posts"), where("boardId", "==", boardDoc.id));
-
-const postSnapshot = await getDocs(postQuery);
-
-/* =========================
-게시글 배열화
-========================= */
-
+   게시글 조회 (대소문자 안전 장치 적용)
+   ========================= */
+const allPostSnapshot = await getDocs(collection(db, "posts"));
 const posts = [];
 
-postSnapshot.forEach((docSnap) => {
-  posts.push({
-    id: docSnap.id,
-    ...docSnap.data(),
-  });
+const targetBoardId = String(boardDoc.id).trim().toLowerCase();
+
+allPostSnapshot.forEach((docSnap) => {
+  const post = docSnap.data();
+  const currentPostBoardId = String(post.boardId).trim().toLowerCase();
+
+  // 💡 대소문자 구별 없이 ID가 일치하면 목록에 추가합니다.
+  if (targetBoardId === currentPostBoardId) {
+    posts.push({
+      id: docSnap.id,
+      ...post,
+    });
+  }
 });
 
 /* =========================
-공지글 우선
-최신글 순
-========================= */
-
+   정렬 (공지글 우선 -> 최신순)
+   ========================= */
 posts.sort((a, b) => {
   if (a.notice && !b.notice) return -1;
   if (!a.notice && b.notice) return 1;
 
-  return (b.createdAt || 0) - (a.createdAt || 0);
+  // 타임스탬프 객체일 경우를 대비해 숫자로 안전하게 변환하여 정렬
+  const timeA = a.createdAt?.seconds ? a.createdAt.seconds * 1000 : a.createdAt || 0;
+  const timeB = b.createdAt?.seconds ? b.createdAt.seconds * 1000 : b.createdAt || 0;
+
+  return timeB - timeA;
 });
 
 /* =========================
-화면 출력
-========================= */
-
+   목록 화면 출력 (날짜 버그 수정)
+   ========================= */
 const tbody = document.getElementById("postList");
-
-tbody.innerHTML = "";
-
 let no = posts.length;
 
-posts.forEach((post) => {
-  tbody.innerHTML += ` <tr>
+const rowsHtml = posts
+  .map((post) => {
+    const postNo = post.notice ? "📌" : no--;
 
+    // 💡 파이어베이스 타임스탬프 객체와 일반 날짜 포맷을 둘 다 지원하도록 안전하게 처리
+    let dateText = "-";
+    if (post.createdAt) {
+      const date = post.createdAt.toDate ? post.createdAt.toDate() : new Date(post.createdAt);
+      dateText = date.toLocaleDateString("ko-KR");
+    }
 
-  <td>
-    ${post.notice ? "📌" : no--}
-  </td>
+    return `
+    <tr>
+      <td>${postNo}</td>
+      <td class="title-cell">
+        <a href="./post.html?id=${post.id}">${post.title}</a>
+      </td>
+      <td>${post.writer || "-"}</td>
+      <td>${dateText}</td>
+      <td>${post.views || 0}</td>
+    </tr>
+  `;
+  })
+  .join("");
 
-  <td class="title-cell">
-
-    <a href="./post.html?id=${post.id}">
-      ${post.title}
-    </a>
-
-  </td>
-
-  <td>
-    ${post.writer || "-"}
-  </td>
-
-  <td>
-    ${post.createdAt ? new Date(post.createdAt).toLocaleDateString("ko-KR") : "-"}
-  </td>
-
-  <td>
-    ${post.views || 0}
-  </td>
-
-</tr>
-
-
-`;
-});
-
-/* =========================
-디버그
-========================= */
-
-console.log("slug =", slug);
-console.log("게시판 ID =", boardDoc.id);
-console.log("게시글 개수 =", posts.length);
+tbody.innerHTML = rowsHtml;
