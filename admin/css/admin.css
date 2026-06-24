@@ -280,3 +280,24 @@ select:focus {
     padding: 20px;
   }
 }
+
+.page-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
+}
+
+.board-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.board-actions {
+  display: flex;
+  gap: 8px;
+}

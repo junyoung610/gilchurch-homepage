@@ -2,23 +2,61 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>게시판관리</title>
+
+    <title>게시판 관리</title>
+
     <link rel="stylesheet" href="./css/admin.css" />
     <link rel="stylesheet" href="./css/sidebar.css" />
 
-    <script src="./js/sidebar.js" defer></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="./js/sidebar-loader.js" defer></script>
   </head>
+
   <body>
     <div class="layout">
-      <!-- 사이드바 -->
       <div id="sidebar-container"></div>
 
-      <main>
-        <h1>게시판관리</h1>
-        <p>준비중...</p>
+      <main class="content">
+        <div class="page-header">
+          <h1>게시판 관리</h1>
+          <p>게시판을 생성하고 관리합니다.</p>
+        </div>
+
+        <div class="page-layout">
+          <div class="card">
+            <h2>게시판 등록</h2>
+
+            <form id="boardForm">
+              <div class="form-group">
+                <label>게시판명</label>
+
+                <input type="text" id="name" required />
+              </div>
+
+              <div class="form-group">
+                <label>슬러그</label>
+
+                <input type="text" id="slug" placeholder="notice" required />
+              </div>
+
+              <div class="form-group">
+                <label>설명</label>
+
+                <textarea id="description" rows="4"></textarea>
+              </div>
+
+              <button type="submit">저장</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h2>게시판 목록</h2>
+
+            <div id="boardList"></div>
+          </div>
+        </div>
       </main>
     </div>
-    <script type="module" src="./js/dashboard.js"></script>
+
+    <script type="module" src="./js/boards.js"></script>
   </body>
 </html>
