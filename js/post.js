@@ -43,9 +43,9 @@ const post = snap.data();
    조회수 증가
 ===================== */
 
-await updateDoc(docRef, {
+/* await updateDoc(docRef, {
   views: increment(1),
-});
+});*/
 
 /* =====================
    화면 출력
