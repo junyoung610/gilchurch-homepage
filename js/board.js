@@ -35,7 +35,8 @@ document.getElementById("boardTitle").textContent = board.name;
 document.getElementById("boardDescription").textContent = board.description || "";
 
 /* 게시글 조회 */
-const postQuery = query(collection(db, "posts"), where("boardId", "==", boardDoc.id));
+const postQuery = query(collection(db, "posts"));
+const postQuery = where("boardId", "==", boardDoc.id);
 
 const postSnapshot = await getDocs(postQuery);
 
