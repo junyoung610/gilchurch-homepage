@@ -37,6 +37,9 @@ document.getElementById("boardDescription").textContent = board.description;
 const postQuery = query(collection(db, "posts"), where("boardId", "==", boardDoc.id));
 
 const postSnapshot = await getDocs(postQuery);
+postSnapshot.forEach((docSnap) => {
+  console.log("게시글 발견", docSnap.id, docSnap.data());
+});
 
 const tbody = document.getElementById("postList");
 
@@ -65,3 +68,11 @@ postSnapshot.forEach((docSnap) => {
     </tr>
   `;
 });
+
+console.log("slug =", slug);
+
+console.log("게시판 개수 =", boardSnapshot.size);
+
+console.log("게시판 ID =", boardDoc.id);
+
+console.log("게시글 개수 =", postSnapshot.size);
