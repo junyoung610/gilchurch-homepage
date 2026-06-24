@@ -12,6 +12,7 @@
 }
 
 .menu-layout {
+  margin-top: 10px;
   display: grid;
   grid-template-columns: 380px 1fr;
   gap: 24px;
