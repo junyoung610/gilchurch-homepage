@@ -43,9 +43,7 @@ const post = snap.data();
    조회수 증가
 ===================== */
 
-/* await updateDoc(docRef, {
-  views: increment(1),
-});*/
+document.getElementById("views").textContent = post.views || 0;
 
 /* =====================
    화면 출력

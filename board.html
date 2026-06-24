@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>게시판</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <header id="header"></header>
+
+    <main class="container">
+      <h1 id="boardTitle"></h1>
+
+      <p id="boardDescription"></p>
+
+      <table class="board-table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+          </tr>
+        </thead>
+
+        <tbody id="postList"></tbody>
+      </table>
+    </main>
+
+    <script type="module" src="./js/board.js"></script>
+  </body>
+</html>
