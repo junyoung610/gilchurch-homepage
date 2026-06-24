@@ -445,3 +445,30 @@ footer {
   border: 1px solid #ddd;
   padding: 10px;
 }
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 50px 20px;
+}
+
+.post-header {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-header h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.post-meta {
+  display: flex;
+  gap: 20px;
+  color: #666;
+}
+
+#content {
+  line-height: 1.8;
+}
