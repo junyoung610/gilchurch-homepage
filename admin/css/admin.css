@@ -301,3 +301,10 @@ select:focus {
   display: flex;
   gap: 8px;
 }
+
+#reportList {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  margin-top: 10px;
+}

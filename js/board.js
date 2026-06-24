@@ -48,7 +48,6 @@ allPostSnapshot.forEach((docSnap) => {
   const post = docSnap.data();
   const currentPostBoardId = String(post.boardId).trim().toLowerCase();
 
-  // 💡 대소문자 구별 없이 ID가 일치하면 목록에 추가합니다.
   if (targetBoardId === currentPostBoardId) {
     posts.push({
       id: docSnap.id,
@@ -64,15 +63,12 @@ posts.sort((a, b) => {
   if (a.notice && !b.notice) return -1;
   if (!a.notice && b.notice) return 1;
 
-  // 타임스탬프 객체일 경우를 대비해 숫자로 안전하게 변환하여 정렬
-  const timeA = a.createdAt?.seconds ? a.createdAt.seconds * 1000 : a.createdAt || 0;
-  const timeB = b.createdAt?.seconds ? b.createdAt.seconds * 1000 : b.createdAt || 0;
-
-  return timeB - timeA;
+  // 💡 YYMMDD 형태의 숫자이므로, 숫자가 클수록 최신 날짜입니다. 단순 뺄셈으로 정렬이 가능합니다.
+  return (b.createdAt || 0) - (a.createdAt || 0);
 });
 
 /* =========================
-   목록 화면 출력 (날짜 버그 수정)
+   목록 화면 출력 (날짜 포맷 수동 변환)
    ========================= */
 const tbody = document.getElementById("postList");
 let no = posts.length;
@@ -81,11 +77,21 @@ const rowsHtml = posts
   .map((post) => {
     const postNo = post.notice ? "📌" : no--;
 
-    // 💡 파이어베이스 타임스탬프 객체와 일반 날짜 포맷을 둘 다 지원하도록 안전하게 처리
     let dateText = "-";
     if (post.createdAt) {
-      const date = post.createdAt.toDate ? post.createdAt.toDate() : new Date(post.createdAt);
-      dateText = date.toLocaleDateString("ko-KR");
+      const dateStr = String(post.createdAt).trim();
+
+      // 💡 6자리 숫자(YYMMDD) 포맷일 때 처리 방법
+      if (dateStr.length === 6) {
+        const year = "20" + dateStr.substring(0, 2); // "20" + "26" = "2026"
+        const month = parseInt(dateStr.substring(2, 4)); // "06" -> 6
+        const day = parseInt(dateStr.substring(4, 6)); // "24" -> 24
+        dateText = `${year}. ${month}. ${day}.`; // "2026. 6. 24."
+      } else {
+        // 일반 날짜 데이터가 들어올 경우를 대비한 백업 코드
+        const date = post.createdAt.toDate ? post.createdAt.toDate() : new Date(post.createdAt);
+        dateText = date.toLocaleDateString("ko-KR");
+      }
     }
 
     return `
