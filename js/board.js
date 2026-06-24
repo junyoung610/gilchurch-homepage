@@ -16,6 +16,12 @@ if (!slug) {
   location.href = "/";
 }
 
+const allPosts = await getDocs(collection(db, "posts"));
+
+allPosts.forEach((docSnap) => {
+  console.log(docSnap.id, docSnap.data());
+});
+
 const boardQuery = query(collection(db, "boards"), where("slug", "==", slug));
 
 const boardSnapshot = await getDocs(boardQuery);
@@ -36,7 +42,7 @@ document.getElementById("boardDescription").textContent = board.description;
 
 const postQuery = query(collection(db, "posts"), where("boardId", "==", boardDoc.id));
 
-const postSnapshot = await getDocs(postQuery);
+const postSnapshot = await getDocs(collection(db, "posts"));
 postSnapshot.forEach((docSnap) => {
   console.log("게시글 발견", docSnap.id, docSnap.data());
 });
