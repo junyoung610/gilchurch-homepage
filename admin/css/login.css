@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #f1f5f9;
+
+  font-family: "Pretendard", sans-serif;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 50px 40px;
+
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  font-size: 64px;
+
+  margin-bottom: 15px;
+}
+
+.login-card h1 {
+  font-size: 32px;
+
+  color: #0f172a;
+
+  margin-bottom: 10px;
+}
+
+.login-card p {
+  color: #64748b;
+
+  margin-bottom: 35px;
+
+  font-size: 15px;
+}
+
+.google-btn {
+  width: 100%;
+
+  border: none;
+
+  border-radius: 12px;
+
+  padding: 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #d1d5db;
+
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  transition: 0.2s;
+}
+
+.google-btn:hover {
+  background: #f8fafc;
+
+  transform: translateY(-2px);
+}
+
+.google-btn img {
+  width: 22px;
+  height: 22px;
+}
+
+.login-footer {
+  margin-top: 25px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+}

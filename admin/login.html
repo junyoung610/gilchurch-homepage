@@ -2,12 +2,33 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>관리자 로그인</title>
-  </head>
-  <body>
-    <h1>관리자 로그인</h1>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <button id="googleLogin">Google 로그인</button>
+    <title>Church CMS 관리자 로그인</title>
+
+    <link rel="stylesheet" href="./css/login.css" />
+  </head>
+
+  <body>
+    <div class="login-container">
+      <div class="login-card">
+        <div class="logo">⛪</div>
+
+        <h1>Church CMS</h1>
+
+        <p>교회 홈페이지 관리자 시스템</p>
+
+        <button id="googleLogin" class="google-btn">
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="google"
+          />
+
+          Google 계정으로 로그인
+        </button>
+        <div class="login-footer">Church CMS v1.0</div>
+      </div>
+    </div>
 
     <script type="module" src="../js/auth.js"></script>
   </body>
