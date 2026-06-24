@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>게시글 관리</title>
+
+    <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
+
+    <script src="./js/sidebar-loader.js" defer></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+  </head>
+
+  <body>
+    <div class="layout">
+      <div id="sidebar-container"></div>
+
+      <main class="content">
+        <div class="page-header">
+          <h1>게시글 관리</h1>
+          <p>게시글을 작성하고 관리합니다.</p>
+        </div>
+
+        <div class="page-layout">
+          <div class="card">
+            <h2>게시글 작성</h2>
+
+            <form id="postForm">
+              <div class="form-group">
+                <label>게시판</label>
+
+                <select id="boardSelect"></select>
+              </div>
+
+              <div class="form-group">
+                <label>제목</label>
+
+                <input type="text" id="title" required />
+              </div>
+
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" id="notice" />
+
+                  공지글
+                </label>
+              </div>
+
+              <textarea id="editor"></textarea>
+
+              <br />
+
+              <button type="submit">저장</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h2>게시글 목록</h2>
+
+            <div id="postList"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="./js/posts.js"></script>
+  </body>
+</html>
