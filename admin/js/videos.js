@@ -30,19 +30,15 @@ async function loadVideos() {
     videoList.innerHTML += `
   <div class="board-item">
 
-    <div>
+    <div class="info">
 
       <strong>
         ${video.title}
       </strong>
 
-      <div>
-        ${video.preacher || "-"}
-      </div>
-
-      <div>
-        ${video.date || "-"}
-      </div>
+      <p>
+        ${video.preacher || "-"} | ${video.date || "-"}
+      </p>
 
     </div>
 

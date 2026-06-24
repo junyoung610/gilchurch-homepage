@@ -29,13 +29,6 @@
   border-radius: 10px;
 }
 
-.card button {
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
 .page-item {
   display: flex;
   justify-content: space-between;
@@ -47,14 +40,4 @@
 .page-actions {
   display: flex;
   gap: 8px;
-}
-
-.edit-btn {
-  background: #2563eb;
-  color: white;
-}
-
-.delete-btn {
-  background: #ef4444;
-  color: white;
 }

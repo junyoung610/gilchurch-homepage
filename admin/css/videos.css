@@ -1,0 +1,24 @@
+.page-header {
+  margin-bottom: 10px;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+}
+
+#videoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.board-item {
+  background: #fff;
+  border-radius: 10px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
