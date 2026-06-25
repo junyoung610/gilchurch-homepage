@@ -13,6 +13,8 @@ import {
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+const boardSelect = document.getElementById("boardSelect");
+
 let editor;
 let editId = null;
 
@@ -28,6 +30,26 @@ ClassicEditor.create(document.querySelector("#content"))
     editor = newEditor;
   })
   .catch(console.error);
+
+async function loadBoards() {
+  const snapshot = await getDocs(collection(db, "boards"));
+
+  boardSelect.innerHTML = `
+    <option value="">
+      게시판 없음
+    </option>
+  `;
+
+  snapshot.forEach((docSnap) => {
+    const board = docSnap.data();
+
+    boardSelect.innerHTML += `
+      <option value="${docSnap.id}">
+        ${board.name}
+      </option>
+    `;
+  });
+}
 
 /* =====================
    목록
@@ -113,6 +135,8 @@ form.addEventListener("submit", async (e) => {
 
     content: editor.getData(),
 
+    boardId: boardSelect.value || null,
+
     updatedAt: serverTimestamp(),
 
     published: true,
@@ -145,6 +169,8 @@ async function editPage(id) {
   if (!snap.exists()) return;
 
   const data = snap.data();
+
+  boardSelect.value = data.boardId || "";
 
   editId = id;
 
@@ -181,10 +207,14 @@ function resetForm() {
   editId = null;
 
   document.querySelector('#pageForm button[type="submit"]').textContent = "저장";
+
+  boardSelect.value = "";
 }
 
 /* =====================
    시작
 ===================== */
+
+await loadBoards();
 
 loadPages();
