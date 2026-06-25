@@ -43,7 +43,13 @@ const post = snap.data();
    조회수 증가
 ===================== */
 
-document.getElementById("views").textContent = post.views || 0;
+await updateDoc(docRef, {
+  views: increment(1),
+});
+
+const currentViews = (post.views || 0) + 1;
+
+document.getElementById("views").textContent = currentViews;
 
 /* =====================
    화면 출력
@@ -55,8 +61,16 @@ document.getElementById("title").textContent = post.title;
 
 document.getElementById("writer").textContent = post.writer || "관리자";
 
-document.getElementById("date").textContent = new Date(post.createdAt).toLocaleDateString();
-
 document.getElementById("views").textContent = (post.views || 0) + 1;
 
 document.getElementById("content").innerHTML = post.content;
+
+let dateText = "-";
+
+if (post.createdAt) {
+  const date = post.createdAt.toDate ? post.createdAt.toDate() : new Date(post.createdAt);
+
+  dateText = date.toLocaleDateString("ko-KR");
+}
+
+document.getElementById("date").textContent = dateText;
