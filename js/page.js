@@ -1,18 +1,19 @@
 import { db } from "./firebase.js";
+import { loadHeader } from "./header.js";
 
 import {
   collection,
   query,
   where,
   getDocs,
+  getDoc,
+  doc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-import { loadHeader } from "./header.js";
 
 await loadHeader();
 
 /* ======================
-   URL slug 읽기
+   URL slug
 ====================== */
 
 const slug = new URLSearchParams(location.search).get("slug");
@@ -24,24 +25,26 @@ if (!slug) {
 }
 
 /* ======================
-   Firestore 조회
+   페이지 조회
 ====================== */
 
-const q = query(collection(db, "pages"), where("slug", "==", slug));
+const pageQuery = query(collection(db, "pages"), where("slug", "==", slug));
 
-const snapshot = await getDocs(q);
+const pageSnapshot = await getDocs(pageQuery);
 
-if (snapshot.empty) {
+if (pageSnapshot.empty) {
   document.getElementById("pageContent").innerHTML = "<h2>존재하지 않는 페이지입니다.</h2>";
-} else {
-  const page = snapshot.docs[0].data();
 
-  document.title = page.title;
-
-  document.getElementById("title").textContent = page.title;
-
-  document.getElementById("pageContent").innerHTML = page.content;
+  throw new Error("페이지 없음");
 }
+
+const page = pageSnapshot.docs[0].data();
+
+document.title = page.title;
+
+document.getElementById("title").textContent = page.title;
+
+document.getElementById("pageContent").innerHTML = page.content;
 
 /* ======================
    게시판 연결
@@ -50,17 +53,43 @@ if (snapshot.empty) {
 if (page.boardId) {
   const boardSnap = await getDoc(doc(db, "boards", page.boardId));
 
-  if (boardSnap.exists()) {
+  if (!boardSnap.exists()) {
+    console.warn("게시판 없음");
+  } else {
     const board = boardSnap.data();
 
-    const postSnapshot = await getDocs(collection(db, "posts"));
+    const allPostSnapshot = await getDocs(collection(db, "posts"));
 
-    let boardHtml = `
+    const posts = [];
+
+    allPostSnapshot.forEach((docSnap) => {
+      const post = docSnap.data();
+
+      if (String(post.boardId).trim().toLowerCase() === String(page.boardId).trim().toLowerCase()) {
+        posts.push({
+          id: docSnap.id,
+          ...post,
+        });
+      }
+    });
+
+    /* 공지 우선 */
+
+    posts.sort((a, b) => {
+      if (a.notice && !b.notice) return -1;
+      if (!a.notice && b.notice) return 1;
+
+      const timeA = a.createdAt?.seconds ? a.createdAt.seconds : 0;
+
+      const timeB = b.createdAt?.seconds ? b.createdAt.seconds : 0;
+
+      return timeB - timeA;
+    });
+
+    let html = `
       <div class="page-board">
 
-        <h2>
-          ${board.name}
-        </h2>
+        <h2>${board.name}</h2>
 
         <table class="board-table">
 
@@ -70,47 +99,54 @@ if (page.boardId) {
               <th>제목</th>
               <th>작성자</th>
               <th>작성일</th>
+              <th>조회수</th>
             </tr>
           </thead>
 
           <tbody>
     `;
 
-    let no = 1;
+    let no = posts.length;
 
-    postSnapshot.forEach((docSnap) => {
-      const post = docSnap.data();
+    posts.forEach((post) => {
+      let dateText = "-";
 
-      if (String(post.boardId).trim().toLowerCase() === String(page.boardId).trim().toLowerCase()) {
-        boardHtml += `
-          <tr>
+      if (post.createdAt) {
+        const date = post.createdAt.toDate ? post.createdAt.toDate() : new Date(post.createdAt);
 
-            <td>
-              ${no++}
-            </td>
-
-            <td>
-
-              <a href="./post.html?id=${docSnap.id}">
-                ${post.title}
-              </a>
-
-            </td>
-
-            <td>
-              ${post.writer || "-"}
-            </td>
-
-            <td>
-              ${post.createdAt ? new Date(post.createdAt).toLocaleDateString("ko-KR") : "-"}
-            </td>
-
-          </tr>
-        `;
+        dateText = date.toLocaleDateString("ko-KR");
       }
+
+      html += `
+        <tr>
+
+          <td>
+            ${post.notice ? "📌" : no--}
+          </td>
+
+          <td class="title-cell">
+            <a href="./post.html?id=${post.id}">
+              ${post.title}
+            </a>
+          </td>
+
+          <td>
+            ${post.writer || "-"}
+          </td>
+
+          <td>
+            ${dateText}
+          </td>
+
+          <td>
+            ${post.views || 0}
+          </td>
+
+        </tr>
+      `;
     });
 
-    boardHtml += `
+    html += `
           </tbody>
 
         </table>
@@ -118,69 +154,6 @@ if (page.boardId) {
       </div>
     `;
 
-    document.getElementById("pageContent").insertAdjacentHTML("beforeend", boardHtml);
+    document.getElementById("pageContent").insertAdjacentHTML("beforeend", html);
   }
-}
-
-if (page.boardId) {
-  const postQuery = query(collection(db, "posts"), where("boardId", "==", page.boardId));
-
-  const postSnapshot = await getDocs(postQuery);
-
-  let html = `
-    <div class="board-area">
-
-      <h2>게시판</h2>
-
-      <table class="board-table">
-
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-          </tr>
-        </thead>
-
-        <tbody>
-  `;
-
-  let no = postSnapshot.size;
-
-  postSnapshot.forEach((docSnap) => {
-    const post = docSnap.data();
-
-    html += `
-      <tr>
-
-        <td>
-          ${post.notice ? "📌" : no--}
-        </td>
-
-        <td>
-          <a href="./post.html?id=${docSnap.id}">
-            ${post.title}
-          </a>
-        </td>
-
-        <td>
-          ${post.writer || "-"}
-        </td>
-
-        <td>
-          ${post.createdAt || "-"}
-        </td>
-
-      </tr>
-    `;
-  });
-
-  html += `
-        </tbody>
-      </table>
-    </div>
-  `;
-
-  document.getElementById("boardSection").innerHTML = html;
 }
