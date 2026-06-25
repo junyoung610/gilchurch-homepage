@@ -42,3 +42,82 @@ if (snapshot.empty) {
 
   document.getElementById("pageContent").innerHTML = page.content;
 }
+
+/* ======================
+   게시판 연결
+====================== */
+
+if (page.boardId) {
+  const boardSnap = await getDoc(doc(db, "boards", page.boardId));
+
+  if (boardSnap.exists()) {
+    const board = boardSnap.data();
+
+    const postSnapshot = await getDocs(collection(db, "posts"));
+
+    let boardHtml = `
+      <div class="page-board">
+
+        <h2>
+          ${board.name}
+        </h2>
+
+        <table class="board-table">
+
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일</th>
+            </tr>
+          </thead>
+
+          <tbody>
+    `;
+
+    let no = 1;
+
+    postSnapshot.forEach((docSnap) => {
+      const post = docSnap.data();
+
+      if (String(post.boardId).trim().toLowerCase() === String(page.boardId).trim().toLowerCase()) {
+        boardHtml += `
+          <tr>
+
+            <td>
+              ${no++}
+            </td>
+
+            <td>
+
+              <a href="./post.html?id=${docSnap.id}">
+                ${post.title}
+              </a>
+
+            </td>
+
+            <td>
+              ${post.writer || "-"}
+            </td>
+
+            <td>
+              ${post.createdAt ? new Date(post.createdAt).toLocaleDateString("ko-KR") : "-"}
+            </td>
+
+          </tr>
+        `;
+      }
+    });
+
+    boardHtml += `
+          </tbody>
+
+        </table>
+
+      </div>
+    `;
+
+    document.getElementById("pageContent").insertAdjacentHTML("beforeend", boardHtml);
+  }
+}
