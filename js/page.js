@@ -121,3 +121,66 @@ if (page.boardId) {
     document.getElementById("pageContent").insertAdjacentHTML("beforeend", boardHtml);
   }
 }
+
+if (page.boardId) {
+  const postQuery = query(collection(db, "posts"), where("boardId", "==", page.boardId));
+
+  const postSnapshot = await getDocs(postQuery);
+
+  let html = `
+    <div class="board-area">
+
+      <h2>게시판</h2>
+
+      <table class="board-table">
+
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+          </tr>
+        </thead>
+
+        <tbody>
+  `;
+
+  let no = postSnapshot.size;
+
+  postSnapshot.forEach((docSnap) => {
+    const post = docSnap.data();
+
+    html += `
+      <tr>
+
+        <td>
+          ${post.notice ? "📌" : no--}
+        </td>
+
+        <td>
+          <a href="./post.html?id=${docSnap.id}">
+            ${post.title}
+          </a>
+        </td>
+
+        <td>
+          ${post.writer || "-"}
+        </td>
+
+        <td>
+          ${post.createdAt || "-"}
+        </td>
+
+      </tr>
+    `;
+  });
+
+  html += `
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  document.getElementById("boardSection").innerHTML = html;
+}

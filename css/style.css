@@ -642,3 +642,32 @@ footer {
     font-size: 28px;
   }
 }
+
+.board-area {
+  margin-top: 60px;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.board-table th {
+  background: #f5f7fa;
+  padding: 15px;
+  border-top: 2px solid #222;
+}
+
+.board-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.board-table a {
+  color: #222;
+  text-decoration: none;
+}
+
+.board-table a:hover {
+  color: #2563eb;
+}
