@@ -2,7 +2,8 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>페이지관리</title>
+    <title>페이지 관리</title>
+
     <link rel="stylesheet" href="./css/admin.css" />
     <link rel="stylesheet" href="./css/sidebar.css" />
     <link rel="stylesheet" href="./css/pages.css" />
@@ -10,6 +11,7 @@
     <script src="./js/sidebar-loader.js" defer></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
   </head>
+
   <body>
     <div class="layout">
       <!-- 사이드바 -->
@@ -22,41 +24,122 @@
         </div>
 
         <div class="page-layout">
-          <!-- 작성 -->
+          <!-- ========================= -->
+          <!-- 페이지 작성 -->
+          <!-- ========================= -->
+
           <div class="card">
             <h2>페이지 작성</h2>
 
             <form id="pageForm">
-              <label>페이지 제목</label>
-              <input type="text" id="title" required />
+              <!-- 기본 정보 -->
 
-              <label>Slug(URL)</label>
-              <input type="text" id="slug" placeholder="history" required />
+              <div class="form-section">
+                <h3 class="section-title">기본 정보</h3>
 
-              <label>페이지 유형</label>
+                <label>페이지 제목</label>
+                <input type="text" id="title" required />
 
-              <select id="pageType">
-                <option value="normal">일반 페이지</option>
+                <label>Slug(URL)</label>
+                <input type="text" id="slug" placeholder="about" required />
 
-                <option value="board">게시판 페이지</option>
-              </select>
+                <label>페이지 유형</label>
 
-              <div id="boardArea">
-                <label>연결 게시판</label>
+                <select id="pageType">
+                  <option value="normal">일반 페이지</option>
 
-                <select id="boardSelect">
-                  <option value="">게시판 없음</option>
+                  <option value="board">게시판 페이지</option>
                 </select>
+
+                <div id="boardArea" style="display: none">
+                  <label>연결 게시판</label>
+
+                  <select id="boardSelect">
+                    <option value="">게시판 선택</option>
+                  </select>
+                </div>
               </div>
 
-              <label>내용</label>
-              <textarea id="content"></textarea>
+              <!-- 내용 -->
 
-              <button type="submit">저장</button>
+              <div class="form-section">
+                <h3 class="section-title">내용</h3>
+
+                <textarea id="content"></textarea>
+              </div>
+
+              <!-- 페이지 설정 -->
+
+              <details class="setting-box" open>
+                <summary>페이지 설정</summary>
+
+                <div class="setting-list">
+                  <label class="setting-card">
+                    <div class="setting-text">
+                      <h4>메뉴에 표시</h4>
+
+                      <p>홈페이지 메뉴에 노출됩니다.</p>
+                    </div>
+
+                    <div class="switch">
+                      <input type="checkbox" id="showMenu" checked />
+
+                      <span class="slider"></span>
+                    </div>
+                  </label>
+
+                  <label class="setting-card">
+                    <div class="setting-text">
+                      <h4>공개 페이지</h4>
+
+                      <p>체크 해제하면 방문자가 접근할 수 없습니다.</p>
+                    </div>
+
+                    <div class="switch">
+                      <input type="checkbox" id="published" checked />
+
+                      <span class="slider"></span>
+                    </div>
+                  </label>
+
+                  <label class="setting-card">
+                    <div class="setting-text">
+                      <h4>페이지 제목 표시</h4>
+
+                      <p>페이지 상단 제목을 표시합니다.</p>
+                    </div>
+
+                    <div class="switch">
+                      <input type="checkbox" id="showTitle" checked />
+
+                      <span class="slider"></span>
+                    </div>
+                  </label>
+
+                  <label class="setting-card">
+                    <div class="setting-text">
+                      <h4>상단 배너 표시</h4>
+
+                      <p>페이지 상단 배너를 표시합니다.</p>
+                    </div>
+
+                    <div class="switch">
+                      <input type="checkbox" id="showBanner" checked />
+
+                      <span class="slider"></span>
+                    </div>
+                  </label>
+                </div>
+              </details>
+
+              <button class="save-btn" type="submit">저장하기</button>
             </form>
           </div>
 
-          <!-- 목록 -->
+          <!-- ========================= -->
+          <!-- 페이지 목록 -->
+          <!-- ========================= -->
+
           <div class="card">
             <h2>페이지 목록</h2>
 
@@ -65,6 +148,7 @@
         </div>
       </main>
     </div>
+
     <script type="module" src="./js/pages.js"></script>
   </body>
 </html>

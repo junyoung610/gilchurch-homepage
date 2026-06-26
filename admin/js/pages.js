@@ -80,25 +80,68 @@ pageType.addEventListener("change", () => {
 async function loadPages() {
   pageList.innerHTML = "";
 
-  const q = query(collection(db, "pages"));
+  /* 게시판 목록 미리 읽기 */
+  const boardSnapshot = await getDocs(collection(db, "boards"));
 
-  const snapshot = await getDocs(q);
+  const boardMap = {};
+
+  boardSnapshot.forEach((docSnap) => {
+    boardMap[docSnap.id] = docSnap.data().name;
+  });
+
+  /* 페이지 목록 */
+  const snapshot = await getDocs(collection(db, "pages"));
 
   snapshot.forEach((docSnap) => {
     const page = docSnap.data();
 
+    const typeName = page.pageType === "board" ? "📋 게시판 페이지" : "📄 일반 페이지";
+
+    const boardName = page.pageType === "board" ? boardMap[page.boardId] || "-" : "-";
+
     pageList.innerHTML += `
       <div class="page-item">
 
-        <div>
+        <div class="page-info">
 
-          <strong>${page.title}</strong>
+          <h3>${page.title}</h3>
 
-          <div>/${page.slug}</div>
+          <div class="page-url">
+            /${page.slug}
+          </div>
 
-          <small>
-            ${page.pageType === "board" ? "📋 게시판 페이지" : "📄 일반 페이지"}
-          </small>
+          <div class="page-meta">
+
+            <span class="page-type">
+              ${typeName}
+            </span>
+
+            ${
+              page.pageType === "board"
+                ? `
+                  <span class="page-board">
+                    게시판 :
+                    <strong>${boardName}</strong>
+                  </span>
+                `
+                : ""
+            }
+
+            <div class="page-setting">
+
+    ${page.showMenu ? "✅ 메뉴" : "❌ 메뉴"}
+
+    &nbsp;&nbsp;
+
+    ${page.showBanner ? "🖼 배너" : ""}
+
+    &nbsp;&nbsp;
+
+    ${page.published ? "🌐 공개" : "🔒 비공개"}
+
+</div>
+
+          </div>
 
         </div>
 
@@ -147,9 +190,9 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const data = {
-    title: document.getElementById("title").value.trim(),
+    title: document.getElementById("title").value,
 
-    slug: document.getElementById("slug").value.trim(),
+    slug: document.getElementById("slug").value,
 
     content: editor.getData(),
 
@@ -157,7 +200,13 @@ form.addEventListener("submit", async (e) => {
 
     boardId: pageType.value === "board" ? boardSelect.value : null,
 
-    published: true,
+    showTitle: document.getElementById("showTitle").checked,
+
+    showBanner: document.getElementById("showBanner").checked,
+
+    showMenu: document.getElementById("showMenu").checked,
+
+    published: document.getElementById("published").checked,
 
     updatedAt: serverTimestamp(),
   };
@@ -206,6 +255,14 @@ async function editPage(id) {
     boardSelect.value = "";
   }
 
+  document.getElementById("showTitle").checked = data.showTitle ?? true;
+
+  document.getElementById("showBanner").checked = data.showBanner ?? true;
+
+  document.getElementById("showMenu").checked = data.showMenu ?? true;
+
+  document.getElementById("published").checked = data.published ?? true;
+
   editor.setData(data.content || "");
 
   document.querySelector('#pageForm button[type="submit"]').textContent = "수정 저장";
@@ -233,6 +290,14 @@ async function deletePage(id) {
 ===================== */
 
 function resetForm() {
+  document.getElementById("showTitle").checked = true;
+
+  document.getElementById("showBanner").checked = true;
+
+  document.getElementById("showMenu").checked = true;
+
+  document.getElementById("published").checked = true;
+
   form.reset();
 
   editor.setData("");

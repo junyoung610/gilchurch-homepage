@@ -20,7 +20,6 @@ const slug = new URLSearchParams(location.search).get("slug");
 
 if (!slug) {
   document.getElementById("pageContent").innerHTML = "<h2>페이지를 찾을 수 없습니다.</h2>";
-
   throw new Error("slug 없음");
 }
 
@@ -34,35 +33,30 @@ const pageSnapshot = await getDocs(pageQuery);
 
 if (pageSnapshot.empty) {
   document.getElementById("pageContent").innerHTML = "<h2>존재하지 않는 페이지입니다.</h2>";
-
   throw new Error("페이지 없음");
 }
 
 const page = pageSnapshot.docs[0].data();
 
 document.title = page.title;
-
 document.getElementById("title").textContent = page.title;
-
-document.getElementById("pageContent").innerHTML = page.content;
+document.getElementById("pageContent").innerHTML = page.content || "";
 
 /* ======================
-   게시판 연결
+   게시판 페이지일 경우만 출력
 ====================== */
 
-if (page.boardId) {
+if (page.pageType === "board" && page.boardId) {
   const boardSnap = await getDoc(doc(db, "boards", page.boardId));
 
-  if (!boardSnap.exists()) {
-    console.warn("게시판 없음");
-  } else {
+  if (boardSnap.exists()) {
     const board = boardSnap.data();
 
-    const allPostSnapshot = await getDocs(collection(db, "posts"));
+    const postSnapshot = await getDocs(collection(db, "posts"));
 
     const posts = [];
 
-    allPostSnapshot.forEach((docSnap) => {
+    postSnapshot.forEach((docSnap) => {
       const post = docSnap.data();
 
       if (String(post.boardId).trim().toLowerCase() === String(page.boardId).trim().toLowerCase()) {
@@ -73,18 +67,22 @@ if (page.boardId) {
       }
     });
 
-    /* 공지 우선 */
-
     posts.sort((a, b) => {
       if (a.notice && !b.notice) return -1;
       if (!a.notice && b.notice) return 1;
 
-      const timeA = a.createdAt?.seconds ? a.createdAt.seconds : 0;
+      const timeA = a.createdAt?.seconds
+        ? a.createdAt.seconds
+        : new Date(a.createdAt || 0).getTime();
 
-      const timeB = b.createdAt?.seconds ? b.createdAt.seconds : 0;
+      const timeB = b.createdAt?.seconds
+        ? b.createdAt.seconds
+        : new Date(b.createdAt || 0).getTime();
 
       return timeB - timeA;
     });
+
+    let no = posts.length;
 
     let html = `
       <div class="page-board">
@@ -106,8 +104,6 @@ if (page.boardId) {
           <tbody>
     `;
 
-    let no = posts.length;
-
     posts.forEach((post) => {
       let dateText = "-";
 
@@ -120,9 +116,7 @@ if (page.boardId) {
       html += `
         <tr>
 
-          <td>
-            ${post.notice ? "📌" : no--}
-          </td>
+          <td>${post.notice ? "📌" : no--}</td>
 
           <td class="title-cell">
             <a href="./post.html?id=${post.id}">
@@ -130,17 +124,11 @@ if (page.boardId) {
             </a>
           </td>
 
-          <td>
-            ${post.writer || "-"}
-          </td>
+          <td>${post.writer || "-"}</td>
 
-          <td>
-            ${dateText}
-          </td>
+          <td>${dateText}</td>
 
-          <td>
-            ${post.views || 0}
-          </td>
+          <td>${post.views || 0}</td>
 
         </tr>
       `;
@@ -157,15 +145,3 @@ if (page.boardId) {
     document.getElementById("pageContent").insertAdjacentHTML("beforeend", html);
   }
 }
-
-console.log("page.boardId =", page.boardId);
-console.log("게시판 존재 =", boardSnap.exists());
-console.log("페이지 boardId =", page.boardId);
-
-allPostSnapshot.forEach((docSnap) => {
-  const post = docSnap.data();
-
-  console.log(post.title, post.boardId);
-});
-
-console.log(posts);
