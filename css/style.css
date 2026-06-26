@@ -1,130 +1,23 @@
+/* =============================================
+   BASE
+   ============================================= */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: sans-serif;
 }
 
-header {
-  padding: 20px;
-  border-bottom: 1px solid #ddd;
-}
-
-nav {
-  display: flex;
-  gap: 20px;
-}
-
-nav a {
-  text-decoration: none;
-  color: black;
-}
-
-#hero {
-  text-align: center;
-}
-
-#hero {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-
-  text-align: center;
-
-  background-size: cover;
-  background-position: center;
-
-  position: relative;
-}
-
-.hero-overlay {
-  background: rgba(0, 0, 0, 0.4);
-
-  color: white;
-
-  width: 100%;
-  height: 500px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-  padding: 40px;
-}
-
-#heroTitle {
-  font-size: 60px;
-  margin-bottom: 20px;
-}
-
-#heroDescription {
-  font-size: 20px;
-  max-width: 700px;
-}
-
-.hero-buttons {
-  margin-top: 30px;
-}
-
-.btn {
-  display: inline-block;
-
-  padding: 12px 25px;
-
-  margin: 0 10px;
-
-  background: white;
-
-  color: black;
-
-  text-decoration: none;
-
-  border-radius: 5px;
-}
-
-.btn.secondary {
-  background: transparent;
-  border: 1px solid white;
-  color: white;
-}
-
+/* =============================================
+   LAYOUT
+   ============================================= */
 .container {
   width: 1200px;
   max-width: 95%;
   margin: auto;
-}
-
-header {
-  border-bottom: 1px solid #ddd;
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
-
-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-}
-
-nav {
-  display: flex;
-  gap: 20px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #333;
-}
-
-footer {
-  background: #222;
-  color: white;
-  padding: 50px 0;
+  padding: 50px 20px;
 }
 
 .section {
@@ -156,6 +49,248 @@ footer {
   line-height: 1.8;
 }
 
+/* =============================================
+   HEADER
+   ============================================= */
+header {
+  background: white;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.logo img {
+  height: 60px;
+  width: auto;
+  display: block;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* =============================================
+   NAVIGATION
+   ============================================= */
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+.main-menu {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.main-menu li > a {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #222;
+  text-decoration: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.main-menu li > a:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+}
+
+.menu-item {
+  position: relative;
+}
+
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: none;
+  padding: 10px 0;
+  list-style: none;
+  z-index: 1000;
+}
+
+.submenu li a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.submenu li a:hover {
+  background: #f8fafc;
+}
+
+.menu-item:hover .submenu {
+  display: block;
+}
+
+/* =============================================
+   AUTH
+   ============================================= */
+#authArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#authArea a {
+  text-decoration: none;
+  color: #333;
+}
+
+.register-btn {
+  background: #2563eb;
+  color: white !important;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+/* =============================================
+   HERO
+   ============================================= */
+#hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  transition: background-image 0.8s ease-in-out;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  width: 100%;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+#heroTitle {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+#heroDescription {
+  font-size: 20px;
+  max-width: 700px;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  margin: 0 10px;
+  background: white;
+  color: black;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn.secondary {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+/* 슬라이드 화살표 */
+.slide-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+  z-index: 10;
+}
+
+.slide-arrow:hover {
+  background: rgba(37, 99, 235, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slide-arrow.left {
+  left: 30px;
+}
+.slide-arrow.right {
+  right: 30px;
+}
+
+/* 슬라이드 도트 */
+.slide-dots {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+
+.dot.active {
+  background: #ffffff;
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* =============================================
+   ABOUT
+   ============================================= */
 .about-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -185,39 +320,21 @@ footer {
   color: #666;
 }
 
-.worship-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 60px;
-}
-
-.worship-card {
-  background: #f8f8f8;
-  border-radius: 20px;
-  padding: 40px;
-  text-align: center;
-}
-
+/* =============================================
+   WORSHIP
+   ============================================= */
 #worshipList {
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 30px;
-
   margin-top: 60px;
 }
 
 .worship-card {
   background: #f8f8f8;
-
   border-radius: 20px;
-
   padding: 40px;
-
   text-align: center;
-
   transition: 0.3s;
 }
 
@@ -225,6 +342,9 @@ footer {
   transform: translateY(-8px);
 }
 
+/* =============================================
+   SERMONS
+   ============================================= */
 #sermonList {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -233,6 +353,9 @@ footer {
 }
 
 .sermon-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   border-radius: 16px;
   overflow: hidden;
   background: #fff;
@@ -247,6 +370,8 @@ footer {
 .sermon-card img {
   width: 100%;
   display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 .sermon-content {
@@ -262,6 +387,9 @@ footer {
   color: #777;
 }
 
+/* =============================================
+   NEWS
+   ============================================= */
 #newsList {
   margin-top: 60px;
 }
@@ -279,199 +407,26 @@ footer {
   font-size: 18px;
 }
 
-.logo img {
-  height: 60px;
-  width: auto;
-  display: block;
-}
-
-.admin-link {
-  color: #ffffff;
-
-  text-decoration: none;
-
-  font-size: 12px;
-
-  opacity: 0.6;
-}
-
-.admin-link:hover {
-  opacity: 1;
-}
-
-.header-right {
-  display: flex;
-
-  align-items: center;
-
-  gap: 20px;
-}
-
-.auth-menu {
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-}
-
-.auth-menu a {
-  text-decoration: none;
-
-  color: #333;
-}
-
-.register-btn {
-  background: #2563eb;
-
-  color: white !important;
-
-  padding: 10px 16px;
-
-  border-radius: 8px;
-}
-
-.auth-menu,
-#authArea {
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-}
-
-#authArea a {
-  text-decoration: none;
-
-  color: #333;
-}
-
-.register-btn {
-  background: #2563eb;
-
-  color: white !important;
-
-  padding: 10px 16px;
-
-  border-radius: 8px;
-}
-
-.main-menu {
-  display: flex;
-  gap: 30px;
-  list-style: none;
-}
-
-.menu-item {
-  position: relative;
-}
-
-.menu-item > a {
-  text-decoration: none;
-  color: #222;
-  font-weight: 600;
-}
-
-.submenu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-
-  min-width: 200px;
-
-  background: white;
-
-  border-radius: 10px;
-
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-
-  display: none;
-
-  padding: 10px 0;
-
-  list-style: none;
-
-  z-index: 1000;
-}
-
-.submenu li a {
-  display: block;
-
-  padding: 10px 15px;
-
-  text-decoration: none;
-
-  color: #333;
-}
-
-.submenu li a:hover {
-  background: #f8fafc;
-}
-
-.menu-item:hover .submenu {
-  display: block;
-}
-
-.page-container {
+/* =============================================
+   PAGE / POST
+   ============================================= */
+.page-container,
+.post-container {
   max-width: 1200px;
   margin: 50px auto;
   padding: 0 20px;
 }
 
-.page-header {
-  margin-bottom: 40px;
-}
-
-.page-header h1 {
-  font-size: 40px;
-  font-weight: 700;
-}
-
-.page-content {
-  line-height: 1.8;
-}
-
-.page-content img {
-  max-width: 100%;
-}
-
-.page-content table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.page-content table td,
-.page-content table th {
-  padding: 10px;
-}
-
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 50px 20px;
-}
-
+.page-header,
 .post-header {
   margin-bottom: 40px;
   padding-bottom: 20px;
   border-bottom: 1px solid #ddd;
 }
 
-.post-header h1 {
-  font-size: 36px;
-  margin-bottom: 15px;
-}
-
-.post-meta {
-  display: flex;
-  gap: 20px;
-  color: #666;
-}
-
-.post-container {
-  max-width: 1200px;
-  margin: 50px auto;
-  padding: 0 20px;
+.page-header h1 {
+  font-size: 40px;
+  font-weight: 700;
 }
 
 .post-card {
@@ -532,50 +487,13 @@ footer {
   opacity: 0.9;
 }
 
-.board-table {
-  width: 100%;
-  border-collapse: collapse;
+/* =============================================
+   BOARD
+   ============================================= */
+.board-area {
+  margin-top: 60px;
 }
 
-.board-table th {
-  border-top: 2px solid #1f4e79;
-  border-bottom: 1px solid #ddd;
-}
-
-.board-table th,
-.board-table td {
-  padding: 14px;
-  text-align: center;
-}
-
-.board-table tbody tr {
-  border-bottom: 1px solid #eee;
-}
-
-.board-table tbody tr:hover {
-  background: #fafafa;
-}
-
-.title-cell {
-  text-align: left;
-}
-
-.title-cell a {
-  color: #222;
-  text-decoration: none;
-}
-
-.title-cell a:hover {
-  color: #1f4e79;
-}
-
-#content {
-  line-height: 1.8;
-}
-.board-table {
-  width: 100%;
-  text-align: center;
-}
 .board-table {
   width: 100%;
   border-collapse: collapse;
@@ -604,6 +522,10 @@ footer {
   font-size: 14px;
 }
 
+.board-table td:nth-child(2) {
+  text-align: left;
+}
+
 .board-table tbody tr {
   transition: 0.2s;
 }
@@ -612,8 +534,8 @@ footer {
   background: #f7faff;
 }
 
-.board-table td:nth-child(2) {
-  text-align: left;
+.board-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .board-table td a {
@@ -626,10 +548,313 @@ footer {
   color: #1f4e79;
 }
 
-.board-table tbody tr:last-child td {
-  border-bottom: none;
+.title-cell {
+  text-align: left;
 }
 
+.title-cell a {
+  color: #222;
+  text-decoration: none;
+}
+
+.title-cell a:hover {
+  color: #1f4e79;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 60px 0 0 0;
+  font-size: 15px;
+  border-top: 1px solid #1e293b;
+}
+
+.footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.footer-info h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.footer-text {
+  color: #94a3b8;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.footer-links h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-nav a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-nav a:hover {
+  color: #38bdf8;
+}
+
+.footer-nav .admin-link {
+  color: #64748b;
+  font-size: 13px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.footer-nav .admin-link:hover {
+  color: #ef4444;
+}
+
+.footer-bottom {
+  background: #020617;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #1e293b;
+}
+
+.footer-bottom p {
+  color: #64748b;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* =============================================
+   IMAGE MODAL (POPUP)
+   ============================================= */
+#hero {
+  cursor: pointer; /* 배경 클릭 시 확대 가능하다는 커서(손가락) 표시 */
+}
+
+/* 팝업창 기본 설정 (기본은 숨김 처리) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* 어두운 반투명 배경 */
+  backdrop-filter: blur(5px); /* 뒤쪽 배경 흐리게 */
+}
+
+/* 팝업 내부 이미지 설정 */
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 85vh;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  animation: zoomIn 0.3s ease; /* 줌인 애니메이션 */
+}
+
+/* 나타나는 애니메이션 */
+@keyframes zoomIn {
+  from {
+    transform: translateY(-50%) scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 닫기(X) 버튼 */
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: #ffffff;
+  font-size: 50px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: 0.2s;
+  z-index: 10000;
+}
+
+.close-modal:hover {
+  color: #ef4444; /* 마우스 올리면 붉은색으로 피드백 */
+  transform: scale(1.1);
+}
+
+/* =============================================
+   MODERN NOTICE MODAL (세련된 공지사항 팝업)
+   ============================================= */
+.notice-modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 23, 42, 0.4); /* 부드러운 네이비톤 반투명 배경 */
+  backdrop-filter: blur(6px); /* 뒷배경을 은은하게 흐림 (글래스모피즘) */
+}
+
+.notice-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border-radius: 20px; /* 모서리를 둥글고 부드럽게 */
+  overflow: hidden;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 380px; /* 슬림하고 스마트폰에서도 예쁜 비율 */
+  animation: popUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* 슬라이드 영역 */
+.notice-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5; /* 포스터가 가장 예쁘게 보이는 황금 비율 */
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notice-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 빈틈없이 꽉 채움 */
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* 팝업 화살표 (공중에 뜬 흰색 원형 디자인) */
+.notice-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  z-index: 10;
+}
+.notice-arrow:hover {
+  background: #ffffff;
+  transform: translateY(-50%) scale(1.05);
+}
+.notice-arrow.left {
+  left: 16px;
+}
+.notice-arrow.right {
+  right: 16px;
+}
+
+/* 팝업 도트 (최신 트렌드: 활성화된 도트가 길어지는 알약 형태) */
+.notice-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+.notice-dots .dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.notice-dots .dot.active {
+  background: #ffffff;
+  width: 20px; /* 활성화 시 길어짐 */
+  border-radius: 4px;
+}
+
+/* 하단 컨트롤 바 (선 없이 미니멀하게) */
+.notice-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #ffffff;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close-btn:hover {
+  color: #2563eb;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
 @media (max-width: 768px) {
   .board-table th,
   .board-table td {
@@ -640,32 +865,4 @@ footer {
   .board-header h1 {
     font-size: 28px;
   }
-}
-
-.board-area {
-  margin-top: 60px;
-}
-
-.board-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.board-table th {
-  padding: 15px;
-  border-top: 2px solid #222;
-}
-
-.board-table td {
-  padding: 15px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.board-table a {
-  color: #222;
-  text-decoration: none;
-}
-
-.board-table a:hover {
-  color: #2563eb;
 }
