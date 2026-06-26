@@ -442,7 +442,6 @@ footer {
 
 .page-content table td,
 .page-content table th {
-  border: 1px solid #ddd;
   padding: 10px;
 }
 
@@ -653,7 +652,6 @@ footer {
 }
 
 .board-table th {
-  background: #f5f7fa;
   padding: 15px;
   border-top: 2px solid #222;
 }

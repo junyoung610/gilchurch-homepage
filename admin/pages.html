@@ -33,11 +33,21 @@
               <label>Slug(URL)</label>
               <input type="text" id="slug" placeholder="history" required />
 
-              <label>연결 게시판</label>
+              <label>페이지 유형</label>
 
-              <select id="boardSelect">
-                <option value="">게시판 없음</option>
+              <select id="pageType">
+                <option value="normal">일반 페이지</option>
+
+                <option value="board">게시판 페이지</option>
               </select>
+
+              <div id="boardArea">
+                <label>연결 게시판</label>
+
+                <select id="boardSelect">
+                  <option value="">게시판 없음</option>
+                </select>
+              </div>
 
               <label>내용</label>
               <textarea id="content"></textarea>

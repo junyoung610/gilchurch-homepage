@@ -157,3 +157,15 @@ if (page.boardId) {
     document.getElementById("pageContent").insertAdjacentHTML("beforeend", html);
   }
 }
+
+console.log("page.boardId =", page.boardId);
+console.log("게시판 존재 =", boardSnap.exists());
+console.log("페이지 boardId =", page.boardId);
+
+allPostSnapshot.forEach((docSnap) => {
+  const post = docSnap.data();
+
+  console.log(post.title, post.boardId);
+});
+
+console.log(posts);
