@@ -4,7 +4,7 @@
 
 .page-layout {
   display: grid;
-  grid-template-columns: 480px 1fr;
+  grid-template-columns: 600px 1fr;
   gap: 28px;
   margin-top: 20px;
   align-items: start;

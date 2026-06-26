@@ -34,27 +34,21 @@ const page = pageSnapshot.docs[0].data();
 document.title = page.title;
 document.getElementById("title").textContent = page.title;
 
-// 디자인 템플릿 엔진 시작
+// 게시판형 페이지면 게시판 렌더링, 아니면 템플릿 엔진 실행
 if (page.pageType === "board" && page.boardId) {
-  // 게시판형 페이지일 경우
   renderBoard(page.boardId);
 } else {
-  // 일반 페이지일 경우 (about, intro 등)
-  // 템플릿 디자인을 적용하여 렌더링
   renderPageTemplate(page);
 }
 
 /* ======================
-   디자인 템플릿 함수들
+   디자인 템플릿 엔진 (통합 버전)
 ====================== */
-
-// 일반 페이지 템플릿 (about, 소개 등 디자인 적용)
-/* renderPageTemplate 함수 수정 */
 function renderPageTemplate(page) {
-  // 이미지가 있으면 해당 이미지를 사용, 없으면 기본 Unsplash 이미지 사용
   const bannerImage =
     page.imageUrl || "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800";
 
+  // 1. 교회 소개 페이지 템플릿
   if (page.slug === "about") {
     pageContentEl.innerHTML = `
       <div class="about-container">
@@ -66,8 +60,19 @@ function renderPageTemplate(page) {
         </div>
       </div>
     `;
-  } else {
-    // 일반 페이지는 내용을 출력하되, 상단에 이미지를 넣고 싶다면 아래처럼 추가 가능
+  }
+  // 2. 연혁 페이지 템플릿
+  else if (page.slug === "history") {
+    pageContentEl.innerHTML = `
+      <div class="history-container">
+        <div class="timeline">
+            ${page.content}
+        </div>
+      </div>
+    `;
+  }
+  // 3. 일반 페이지 템플릿
+  else {
     pageContentEl.innerHTML = `
       <div class="page-default">
         <img src="${bannerImage}" class="page-banner" alt="${page.title}">
@@ -77,7 +82,9 @@ function renderPageTemplate(page) {
   }
 }
 
-// 게시판 렌더링 함수
+/* ======================
+   게시판 렌더링 함수
+====================== */
 async function renderBoard(boardId) {
   const boardSnap = await getDoc(doc(db, "boards", boardId));
   if (!boardSnap.exists()) return;
@@ -93,14 +100,8 @@ async function renderBoard(boardId) {
     }
   });
 
-  // 정렬 로직
-  posts.sort((a, b) => {
-    const timeA = a.createdAt?.seconds || 0;
-    const timeB = b.createdAt?.seconds || 0;
-    return timeB - timeA;
-  });
+  posts.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
 
-  // 게시판 디자인 템플릿
   let html = `
     <div class="page-board">
       <h2>${board.name}</h2>
@@ -108,7 +109,7 @@ async function renderBoard(boardId) {
         <thead>
           <tr><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th></tr>
         </thead>
-        <tbody id="boardBody">
+        <tbody>
           ${posts
             .map(
               (post, index) => `

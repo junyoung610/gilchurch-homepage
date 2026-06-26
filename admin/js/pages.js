@@ -32,12 +32,36 @@ let editId = null;
 
 /* admin/js/pages.js 내부 */
 ClassicEditor.create(document.querySelector("#content"), {
-  allowedContent: true,
+  // 툴바 목록에 sourceEditing 추가
+  toolbar: [
+    "heading",
+    "|",
+    "bold",
+    "italic",
+    "link",
+    "bulletedList",
+    "numberedList",
+    "|",
+    "insertTable",
+    "blockQuote",
+    "|",
+    "undo",
+    "redo",
+    "|",
+    "sourceEditing",
+  ],
+  // 소스 편집 허용
+  sourceEditing: {
+    allow: [{ name: /.*/, attributes: true, classes: true, styles: true }],
+  },
 })
-  .then((newEditor) => {
-    editor = newEditor;
+  .then((editor) => {
+    window.editor = editor; // 전역으로 에디터 객체 저장
   })
-  .catch(console.error);
+  .catch((error) => {
+    console.error(error);
+  });
+
 /* =====================
    게시판 목록
 ===================== */

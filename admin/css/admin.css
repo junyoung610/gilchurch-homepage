@@ -326,3 +326,9 @@ select:focus {
   background: #ef4444;
   color: white;
 }
+
+/* CKEditor 높이 강제 조절 */
+.ck-editor__editable_inline {
+  min-height: 400px !important; /* 최소 높이를 400px로 설정 */
+  max-height: 800px; /* 너무 길어지지 않게 최대 높이 설정 */
+}
