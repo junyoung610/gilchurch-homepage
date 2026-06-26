@@ -866,3 +866,157 @@ footer {
     font-size: 28px;
   }
 }
+
+/* =============================================
+   ABOUT PAGE (교회 소개 페이지 동적 렌더링 스타일)
+   ============================================= */
+.about-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* 인사말 섹션 */
+.about-greeting {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.greeting-text {
+  flex: 1;
+}
+.greeting-text h2 {
+  font-size: 28px;
+  color: #0f172a;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+.greeting-text p {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.pastor-sign {
+  margin-top: 30px;
+  font-size: 18px;
+  text-align: right;
+  color: #0f172a;
+}
+
+.greeting-image {
+  flex: 1;
+}
+.greeting-image img {
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+/* 비전 및 핵심가치 섹션 */
+.about-vision h2 {
+  text-align: center;
+  font-size: 28px;
+  color: #0f172a;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+.vision-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.v-card {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease;
+}
+.v-card:hover {
+  transform: translateY(-10px);
+} /* 마우스 오버 시 떠오름 */
+
+.v-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+.v-card h3 {
+  font-size: 20px;
+  color: #0f172a;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.v-card p {
+  font-size: 15px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* 스마트폰 모바일 화면 최적화 */
+@media (max-width: 768px) {
+  .about-greeting {
+    flex-direction: column;
+    padding: 24px;
+  }
+  .greeting-text h2 {
+    font-size: 24px;
+  }
+}
+
+/* 소개 페이지 이미지 및 배치 최적화 */
+.greeting-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.greeting-text {
+  flex: 2; /* 텍스트가 더 많은 공간을 차지 */
+}
+
+.greeting-image {
+  flex: 1; /* 이미지가 우측에서 고정 비율 유지 */
+}
+
+.greeting-image img {
+  width: 100%; /* 부모 공간에 딱 맞게 */
+  max-width: 300px; /* 최대 크기를 300px로 제한 (너무 커지지 않게) */
+  height: auto;
+  border-radius: 12px; /* 둥근 모서리 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pastor-sign {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 1.1em;
+  text-align: right;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+/* 일반 페이지 상단 배너 디자인 */
+.page-banner {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 30px;
+}
+.page-body {
+  line-height: 1.8;
+  color: #334;
+}

@@ -30,12 +30,14 @@ let editId = null;
    CKEditor
 ===================== */
 
-ClassicEditor.create(document.querySelector("#content"))
+/* admin/js/pages.js 내부 */
+ClassicEditor.create(document.querySelector("#content"), {
+  allowedContent: true,
+})
   .then((newEditor) => {
     editor = newEditor;
   })
   .catch(console.error);
-
 /* =====================
    게시판 목록
 ===================== */
@@ -190,6 +192,8 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const data = {
+    imageUrl: document.getElementById("imageUrl").value,
+
     title: document.getElementById("title").value,
 
     slug: document.getElementById("slug").value,
@@ -240,6 +244,8 @@ async function editPage(id) {
   const data = snap.data();
 
   editId = id;
+
+  imageUrl: document.getElementById("imageUrl").value;
 
   document.getElementById("title").value = data.title;
 
