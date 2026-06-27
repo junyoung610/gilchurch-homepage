@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>페이지 편집</title>
+
+    <link rel="stylesheet" href="./css/admin.css" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
+    <link rel="stylesheet" href="./css/page-editor.css" />
+
+    <script src="./js/sidebar-loader.js" defer></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+  </head>
+
+  <body>
+    <div class="layout">
+      <div id="sidebar-container"></div>
+
+      <main class="content">
+        <div class="editor-header">
+          <a href="./pages.html" class="back-btn"> ← 페이지 목록 </a>
+
+          <button id="saveBtn" class="save-btn">저장하기</button>
+        </div>
+
+        <!-- 기본정보 -->
+
+        <section class="editor-section">
+          <h2>기본 정보</h2>
+
+          <div class="form-grid">
+            <div class="form-item">
+              <label>페이지 제목</label>
+              <input type="text" id="title" />
+            </div>
+
+            <div class="form-item">
+              <label>Slug</label>
+              <input type="text" id="slug" />
+            </div>
+
+            <div class="form-item">
+              <label>대표 이미지</label>
+              <input type="text" id="thumbnail" />
+            </div>
+
+            <div class="form-item">
+              <label>페이지 유형</label>
+
+              <select id="pageType">
+                <option value="normal">일반 페이지</option>
+                <option value="board">게시판</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="boardArea">
+            <label>게시판 연결</label>
+
+            <select id="boardSelect"></select>
+          </div>
+        </section>
+
+        <!-- 페이지 설정 -->
+
+        <section class="editor-section">
+          <h2>페이지 설정</h2>
+
+          <div class="setting-grid">
+            <label class="setting-card">
+              <input type="checkbox" id="published" checked />
+              <span>공개</span>
+            </label>
+
+            <label class="setting-card">
+              <input type="checkbox" id="showMenu" checked />
+              <span>메뉴 표시</span>
+            </label>
+
+            <label class="setting-card">
+              <input type="checkbox" id="showTitle" checked />
+              <span>제목 표시</span>
+            </label>
+
+            <label class="setting-card">
+              <input type="checkbox" id="showBanner" checked />
+              <span>상단 배너</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- 페이지 구성 -->
+
+        <section class="editor-section">
+          <div class="section-header">
+            <h2>페이지 구성</h2>
+          </div>
+
+          <div id="sectionList">
+            <textarea id="content"></textarea>
+          </div>
+
+          <div class="section-add">
+            <button type="button" id="addSectionBtn" class="add-section-btn">+ 섹션 추가</button>
+          </div>
+        </section>
+        <!-- ===========================
+섹션 선택 모달
+============================ -->
+
+        <div id="sectionModal" class="modal">
+          <div class="modal-box">
+            <h2>섹션 추가</h2>
+
+            <div class="section-grid">
+              <button data-type="hero">
+                🖼
+                <span>메인 배너</span>
+              </button>
+
+              <button data-type="text">
+                📝
+                <span>텍스트</span>
+              </button>
+
+              <button data-type="imageText">
+                📄
+                <span>이미지 + 텍스트</span>
+              </button>
+
+              <button data-type="gallery">
+                📷
+                <span>갤러리</span>
+              </button>
+
+              <button data-type="board">
+                📋
+                <span>게시판</span>
+              </button>
+
+              <button data-type="slider">
+                🎞
+                <span>슬라이더</span>
+              </button>
+
+              <button data-type="youtube">
+                ▶
+                <span>유튜브</span>
+              </button>
+
+              <button data-type="map">
+                🗺
+                <span>지도</span>
+              </button>
+
+              <button data-type="worship">
+                🕒
+                <span>예배시간</span>
+              </button>
+
+              <button data-type="pastor">
+                👤
+                <span>담임목사</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="./js/page-editor.js"></script>
+  </body>
+</html>

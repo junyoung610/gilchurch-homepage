@@ -2,355 +2,79 @@ import { db } from "./firebase.js";
 
 import {
   collection,
-  addDoc,
   getDocs,
-  getDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-/* =====================
-   DOM
-===================== */
-
-const form = document.getElementById("pageForm");
 const pageList = document.getElementById("pageList");
+const searchInput = document.getElementById("searchInput");
 
-const pageType = document.getElementById("pageType");
-const boardArea = document.getElementById("boardArea");
-const boardSelect = document.getElementById("boardSelect");
-
-let editor;
-let editId = null;
-
-/* =====================
-   CKEditor
-===================== */
-
-/* admin/js/pages.js 내부 */
-ClassicEditor.create(document.querySelector("#content"), {
-  // 툴바 목록에 sourceEditing 추가
-  toolbar: [
-    "heading",
-    "|",
-    "bold",
-    "italic",
-    "link",
-    "bulletedList",
-    "numberedList",
-    "|",
-    "insertTable",
-    "blockQuote",
-    "|",
-    "undo",
-    "redo",
-    "|",
-    "sourceEditing",
-  ],
-  // 소스 편집 허용
-  sourceEditing: {
-    allow: [{ name: /.*/, attributes: true, classes: true, styles: true }],
-  },
-})
-  .then((editor) => {
-    window.editor = editor; // 전역으로 에디터 객체 저장
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-/* =====================
-   게시판 목록
-===================== */
-
-async function loadBoards() {
-  const snapshot = await getDocs(collection(db, "boards"));
-
-  boardSelect.innerHTML = `
-    <option value="">
-      게시판 선택
-    </option>
-  `;
-
-  snapshot.forEach((docSnap) => {
-    const board = docSnap.data();
-
-    boardSelect.innerHTML += `
-      <option value="${docSnap.id}">
-        ${board.name}
-      </option>
-    `;
-  });
-}
-
-/* =====================
-   페이지 유형 변경
-===================== */
-
-pageType.addEventListener("change", () => {
-  if (pageType.value === "board") {
-    boardArea.style.display = "block";
-  } else {
-    boardArea.style.display = "none";
-    boardSelect.value = "";
-  }
-});
-
-/* =====================
-   페이지 목록
-===================== */
+let pages = [];
 
 async function loadPages() {
   pageList.innerHTML = "";
 
-  /* 게시판 목록 미리 읽기 */
-  const boardSnapshot = await getDocs(collection(db, "boards"));
-
-  const boardMap = {};
-
-  boardSnapshot.forEach((docSnap) => {
-    boardMap[docSnap.id] = docSnap.data().name;
-  });
-
-  /* 페이지 목록 */
   const snapshot = await getDocs(collection(db, "pages"));
 
+  pages = [];
+
   snapshot.forEach((docSnap) => {
-    const page = docSnap.data();
+    pages.push({
+      id: docSnap.id,
 
-    const typeName = page.pageType === "board" ? "📋 게시판 페이지" : "📄 일반 페이지";
+      ...docSnap.data(),
+    });
+  });
 
-    const boardName = page.pageType === "board" ? boardMap[page.boardId] || "-" : "-";
+  renderPages(pages);
+}
 
+function renderPages(data) {
+  pageList.innerHTML = "";
+
+  data.forEach((page) => {
     pageList.innerHTML += `
-      <div class="page-item">
 
-        <div class="page-info">
+        <div class="page-item">
 
-          <h3>${page.title}</h3>
+            <div class="page-left">
 
-          <div class="page-url">
-            /${page.slug}
-          </div>
+                <h3>${page.title}</h3>
 
-          <div class="page-meta">
+                <p>/${page.slug}</p>
 
-            <span class="page-type">
-              ${typeName}
-            </span>
+            </div>
 
-            ${
-              page.pageType === "board"
-                ? `
-                  <span class="page-board">
-                    게시판 :
-                    <strong>${boardName}</strong>
-                  </span>
-                `
-                : ""
-            }
+            <div class="page-right">
 
-            <div class="page-setting">
+                <button
+                    class="edit-btn"
+                    onclick="location.href='page-editor.html?id=${page.id}'">
 
-    ${page.showMenu ? "✅ 메뉴" : "❌ 메뉴"}
+                    수정
 
-    &nbsp;&nbsp;
+                </button>
 
-    ${page.showBanner ? "🖼 배너" : ""}
-
-    &nbsp;&nbsp;
-
-    ${page.published ? "🌐 공개" : "🔒 비공개"}
-
-</div>
-
-          </div>
+            </div>
 
         </div>
 
-        <div class="page-actions">
-
-          <button
-            class="edit-btn"
-            data-id="${docSnap.id}">
-            수정
-          </button>
-
-          <button
-            class="delete-btn"
-            data-id="${docSnap.id}">
-            삭제
-          </button>
-
-        </div>
-
-      </div>
-    `;
-  });
-
-  bindEvents();
-}
-
-/* =====================
-   이벤트
-===================== */
-
-function bindEvents() {
-  document.querySelectorAll(".edit-btn").forEach((btn) => {
-    btn.onclick = () => editPage(btn.dataset.id);
-  });
-
-  document.querySelectorAll(".delete-btn").forEach((btn) => {
-    btn.onclick = () => deletePage(btn.dataset.id);
+        `;
   });
 }
 
-/* =====================
-   저장
-===================== */
+searchInput.addEventListener("input", () => {
+  const keyword = searchInput.value.toLowerCase();
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const data = {
-    imageUrl: document.getElementById("imageUrl").value,
-
-    title: document.getElementById("title").value,
-
-    slug: document.getElementById("slug").value,
-
-    content: editor.getData(),
-
-    pageType: pageType.value,
-
-    boardId: pageType.value === "board" ? boardSelect.value : null,
-
-    showTitle: document.getElementById("showTitle").checked,
-
-    showBanner: document.getElementById("showBanner").checked,
-
-    showMenu: document.getElementById("showMenu").checked,
-
-    published: document.getElementById("published").checked,
-
-    updatedAt: serverTimestamp(),
-  };
-
-  if (editId) {
-    await updateDoc(doc(db, "pages", editId), data);
-
-    alert("수정 완료");
-  } else {
-    data.createdAt = serverTimestamp();
-
-    await addDoc(collection(db, "pages"), data);
-
-    alert("저장 완료");
-  }
-
-  resetForm();
-
-  loadPages();
+  renderPages(
+    pages.filter(
+      (page) =>
+        page.title.toLowerCase().includes(keyword) || page.slug.toLowerCase().includes(keyword),
+    ),
+  );
 });
 
-/* =====================
-   수정
-===================== */
-
-async function editPage(id) {
-  const snap = await getDoc(doc(db, "pages", id));
-
-  if (!snap.exists()) return;
-
-  const data = snap.data();
-
-  editId = id;
-
-  imageUrl: document.getElementById("imageUrl").value;
-
-  document.getElementById("title").value = data.title;
-
-  document.getElementById("slug").value = data.slug;
-
-  pageType.value = data.pageType || "normal";
-
-  if (pageType.value === "board") {
-    boardArea.style.display = "block";
-    boardSelect.value = data.boardId || "";
-  } else {
-    boardArea.style.display = "none";
-    boardSelect.value = "";
-  }
-
-  document.getElementById("showTitle").checked = data.showTitle ?? true;
-
-  document.getElementById("showBanner").checked = data.showBanner ?? true;
-
-  document.getElementById("showMenu").checked = data.showMenu ?? true;
-
-  document.getElementById("published").checked = data.published ?? true;
-
-  editor.setData(data.content || "");
-
-  document.querySelector('#pageForm button[type="submit"]').textContent = "수정 저장";
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-}
-
-/* =====================
-   삭제
-===================== */
-
-async function deletePage(id) {
-  if (!confirm("삭제하시겠습니까?")) return;
-
-  await deleteDoc(doc(db, "pages", id));
-
-  loadPages();
-}
-
-/* =====================
-   초기화
-===================== */
-
-function resetForm() {
-  document.getElementById("showTitle").checked = true;
-
-  document.getElementById("showBanner").checked = true;
-
-  document.getElementById("showMenu").checked = true;
-
-  document.getElementById("published").checked = true;
-
-  form.reset();
-
-  editor.setData("");
-
-  editId = null;
-
-  pageType.value = "normal";
-
-  boardArea.style.display = "none";
-
-  boardSelect.value = "";
-
-  document.querySelector('#pageForm button[type="submit"]').textContent = "저장";
-}
-
-/* =====================
-   시작
-===================== */
-
-await loadBoards();
-
-pageType.value = "normal";
-
-boardArea.style.display = "none";
+document.getElementById("newPageBtn").onclick = () => {
+  location.href = "page-editor.html";
+};
 
 loadPages();
