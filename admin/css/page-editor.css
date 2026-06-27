@@ -296,3 +296,29 @@
 .setting-card span {
   font-weight: bold;
 }
+
+.section-card {
+  cursor: grab;
+}
+
+.section-card.dragging {
+  opacity: 0.5;
+}
+
+.section-card.over {
+  border: 2px dashed #2563eb;
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.section-card-header {
+  cursor: grab;
+
+  user-select: none;
+}
+
+.section-card-header:active {
+  cursor: grabbing;
+}

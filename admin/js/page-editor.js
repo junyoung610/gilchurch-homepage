@@ -14,6 +14,7 @@ import {
    상태
 =================================== */
 
+let sortable = null;
 let editor = null;
 let editId = null;
 let sections = [];
@@ -582,6 +583,28 @@ placeholder="인사말"></textarea>
   });
 
   bindSectionEvents();
+
+  initSortable();
+}
+
+function initSortable() {
+  if (sortable) {
+    sortable.destroy();
+  }
+
+  sortable = new Sortable(sectionList, {
+    animation: 200,
+
+    ghostClass: "dragging",
+
+    handle: ".section-card-header",
+
+    onEnd: function (evt) {
+      const moved = sections.splice(evt.oldIndex, 1)[0];
+
+      sections.splice(evt.newIndex, 0, moved);
+    },
+  });
 }
 
 /* ===================================
